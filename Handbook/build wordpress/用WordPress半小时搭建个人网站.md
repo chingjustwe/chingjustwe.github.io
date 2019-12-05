@@ -7,10 +7,10 @@
 [WordPress](https://wordpress.org/)是一个用PHP开发的，开源的内容管理系统(Content Management System)，是目前世界上最流行的CMS解决方案。截至2019年4月，全球最大的1000万个网站中有33.6%都在使用WordPress。在个人网站及小型网站上，WordPress的使用也十分广泛。
 #### 为什么选择WordPress？
 主要有以下几点原因：
->- 快速上手，开源免费，开箱即用
->- 功能强大，插件丰富，页面美观，满足建站的大部分需求
->- 非常流行，用户基础庞大，社区活跃，日常遇到的大部分问题都能得到解答
->- 安全，很多的政府机构都在使用
+> - 快速上手，开源免费，开箱即用
+> - 功能强大，插件丰富，页面美观，满足建站的大部分需求
+> - 非常流行，用户基础庞大，社区活跃，日常遇到的大部分问题都能得到解答
+> - 安全，很多的政府机构都在使用
 
 # 前提条件
 WordPress是需要有运行环境的，即所谓的**LAMP(Linux, Apache, MySQL, PHP)**。因为是用PHP开发的，所以必须要有**PHP**的运行环境，数据库可以选择**MySQL**，也可以安装[MariaDB](https://en.wikipedia.org/wiki/MariaDB "MariaDB")。两者的区别这里不做扩展说明。当然WordPress对于各个操作系统(Linux, Mac OS, Windows)都是有各自的版本的，但是既然考虑作为服务器使用，还是推荐用**Linux**。Web服务器也并不限定于Apache，像Nginx也是一个很好的选择，但考虑到Apache相对来说更加简单，所以我们选择**Apache**来建站。
@@ -34,13 +34,13 @@ Apache默认监听端口80,配置文件在
 >/var/www/html/
 
 这时候我们在浏览器里，通过机器的ip或者hostname访问80端口，如[http://101.132.67.54:80](http://101.132.67.54:80)，就可以看到Apache的欢迎页面了
-![apache welcome page](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/WordPress%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/apache_welcome.png)
+![apache welcome page](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20wordpress/apache_welcome.png)
 
 一般我们不需要做额外的配置。如果需要修改端口，只需要修改**ports.conf**中的**Listen**参数，因为**apache2.conf**中include了文件**ports.conf**。
 
 在这里，如果遇到http请求访问不通，需要查一下防火墙的设置，将端口加入白名单。
 同时对于云主机，出于安全考虑可能厂家对端口也默认设置了一些规则，拿阿里云的机器举例子，需要自己在控制台配置规则，打开相应端口
-![ACS rule](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/WordPress%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/rule.png)
+![ACS rule](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/build%20wordpress/rule.png)
 #### MySQL
 - 安装MySQL
 ```
@@ -85,7 +85,7 @@ phpinfo();
 ?>
 ```
 保存之后，浏览器访问**info.php**这个文件，如[http://101.132.67.54/info.php](http://101.132.67.54:80/info.php)，可以看到PHP的信息页面
-![php info page](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/WordPress%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/php_welcome.png)
+![php info page](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20wordpress/php_welcome.png)
 # 安装WordPress
 - 下载WordPress
 直接从官网下载最新版本到本地
@@ -105,7 +105,7 @@ sudo chown -R www-data:www-data /var/www/html/
 sudo chmod -R 755 /var/www/html/
 ```
 如此一来，就可以从浏览器访问到**WordPress**的服务了，如访问[http://101.132.67.54](http://101.132.67.54)，应该可以看到欢迎页面
-![WordPress welcome page](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/WordPress%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/word_press_start.png)
+![WordPress welcome page](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/build%20wordpress/word_press_start.png)
 - 配置WordPress
 这里有两个方式，一个方式是直接从浏览器安装，填写数据库连接信息。另一个方式是修改手动配置数据库信息：
 1. 创建配置文件
@@ -125,6 +125,6 @@ define( 'DB_PASSWORD', '${your_password}' );
 define( 'DB_HOST', 'localhost' );
 ```
 至此，大工告成，可以用**WordPress**写文章了~
-![first blog](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/WordPress%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/blog_preview.png)
+![first blog](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20wordpress/blog_preview.png)
 # 总结
 通过**WordPress**可以快速地搭建一个个人网站，需要安装**LAMP**的环境。

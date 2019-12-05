@@ -5,11 +5,11 @@
 **Typecho**是一个由国人开发的*轻量级CMS*，和**WordPress**一样，可以快速建立个人博客网站。So **Why Typecho**？
 **WordPress**有无数的优点，但是选择**Typecho**的理由只需一个：**简单**，**简洁**，**轻量级**。
 **Typecho**几乎是专门为个人博客打造的，全部代码不足400KB，也不像**WordPress**一样对主机性能有一定的要求。界面和控制台都是极简风，非常清爽，很容易上手。对**MarkDown**支持非常友好，不需要额外的插件。
-![typecho_console.png]()
+![Typecho Console](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20typecho/typecho_console.png)
 
 # 环境
 **Typecho**的推荐环境是**LNMP(Linux, Nginx, MySQL, PHP)**，跟**WordPress**非常相似，可以共用。
-因为本人之前写过在**Ubuntu**上搭建**WordPress**环境的步骤，为避免重复造轮，**Linux**，**MySQL**，**PHP7**的部分可以参考[这里]()。
+因为本人之前写过在**Ubuntu**上搭建**WordPress**环境的步骤，为避免重复造轮，**Linux**，**MySQL**，**PHP7**的部分可以参考[这里](https://github.com/chingjustwe/chingjustwe.github.io/blob/master/Handbook/build%20wordpress/%E7%94%A8WordPress%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99.md)。
 #### Nginx
 - 安装Nginx
 > sudo apt-get install nginx
@@ -62,10 +62,10 @@ location ~ \.php$ {
 - 验证Typecho
 
 现在浏览器打开 *{ip}:80*(nginx默认80端口)应该可以看到**Typecho**的欢迎页面了
-![Typecho start]()
+![Typecho Welcome](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20typecho/typecho_start.png)
 
 按照向导一步一步走下来，可以看到简洁清爽的博客界面
-![typecho_helloworld.png]()
+![Typecho Blog](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20typecho/typecho_helloworld.png)
 
 # PHP7可能遇到的问题
 - 502 bad gateway
