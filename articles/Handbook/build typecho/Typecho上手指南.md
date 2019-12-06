@@ -131,7 +131,7 @@ server {
 	}
 }
 ~~~
-- 从**WordPress**迁移到**TypeCho**
+- 从**WordPress**迁移到**Typecho**
 
 **Typecho**有[插件](http://docs.typecho.org/plugins/wordpress-to-typecho)支持从**WordPress**转移文章，但是建议安装老版本的**Typecho**环境，而且对**WordPress**的版本有要求，至少博主在**WordPress5**和**Typecho1.1**下没有迁移成功。所以建议不要迁移哈哈哈。
 
