@@ -3,7 +3,7 @@
 ![无法创建目录](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/articles/Notebook/wordpress%20unable%20to%20add%20plugin/wordpress%20update%20fail.png)
 # 解决
 本人的博客是基于CentOS7和Nginx搭建的，猜测应该是权限的问题。因为WordPress的主题默认都是下载在**wp-content/themes**文件夹下的，所以检查了一下此文件的权限
-![文件夹原始权限](https://raw.githubusercontent.com/chingjustwe/my-blogs/articles/master/Notebook/wordpress%20unable%20to%20add%20plugin/theme%20privilege.png)
+![文件夹原始权限](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/articles/Notebook/wordpress%20unable%20to%20add%20plugin/theme%20privilege.png)
 发现访问权限已经是**755**了，但是用户和组是**root**，于是执行以下命令
 ```
 chown nginx:nginx themes
