@@ -196,7 +196,7 @@ let handler2048 = {};
 			});
 			document.addEventListener('touchmove', (event) => {
 				event.preventDefault();
-			});
+			}, {passive: true});//capitable with IOS and Android
 			document.addEventListener('touchend', (event) => {
 				this.endx = event.changedTouches[0].pageX;
 				this.endy = event.changedTouches[0].pageY;
