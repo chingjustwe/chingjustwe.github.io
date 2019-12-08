@@ -194,6 +194,12 @@ let handler2048 = {};
 				this.startx = event.touches[0].pageX;
 				this.starty = event.touches[0].pageY;
 			});
+                        window.ontouchmove=function(e){
+                            e.preventDefault && e.preventDefault();
+                            e.returnValue=false;
+                            e.stopPropagation && e.stopPropagation();
+                            return false;
+                        };
 			document.addEventListener('touchmove', (event) => {
 				event.preventDefault();
 			}, {passive: true});//capitable with IOS and Android
