@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Night Field's Blog</title>
+    <description>非典型程序员。爱生活，爱技术。</description>
+    <link>http://localhost:4000//</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sun, 08 Dec 2019 21:24:40 +0800</pubDate>
+    <lastBuildDate>Sun, 08 Dec 2019 21:24:40 +0800</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>MathJax Test</title>
+        <description>&lt;p&gt;mathjax in markdown :)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;这是一个不&lt;code class=&quot;highlighter-rouge&quot;&gt;align&lt;/code&gt;的公式&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\forall \alpha \in A, \quad a \cdot b = 0&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;这是一个&lt;code class=&quot;highlighter-rouge&quot;&gt;align&lt;/code&gt;的公式&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\text{for OTP : $\qquad$ if }\quad E(k,\:m)=c\\
+\begin{align}
+k\oplus m &amp;= c \\
+k &amp;= m\oplus c
+\end{align}
+\\
+\#\{\;k \in \mathscr K : \quad E(k,\:m)=c \;\}=1 \quad \forall m,\:c %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;公式块要想有较好的显示效果，必须在公式块标记符&lt;code class=&quot;highlighter-rouge&quot;&gt;$$&lt;/code&gt;&lt;strong&gt;前后&lt;/strong&gt;留有空行，否则公式将不能正常居中。行内公式无此问题。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 30 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/30/mathjax-test.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/30/mathjax-test.html</guid>
+        
+        <category>mathjax</category>
+        
+        
+        <category>test</category>
+        
+      </item>
+    
+      <item>
+        <title>H2O theme for Jekyll</title>
+        <description>&lt;p&gt;正如我在&lt;a href=&quot;http://weibo.com/1374146504/profile?topnav=1&amp;amp;wvr=6&quot;&gt;微博&lt;/a&gt;上所说的，使用&lt;a href=&quot;http://jekyll.com.cn/&quot;&gt;Jekyll&lt;/a&gt;半年以来一直没有令我满意的主题模板，所以开始计划自己写一套好看又好用的主题模板。设计之初就明确了极简主义，风格采用扁平化了，通过卡片式设计来进行区块分明的布局，参考了Medium的ui样式和知乎专栏的视觉风格。&lt;/p&gt;
+
+&lt;h2 id=&quot;h2o&quot;&gt;H2O&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/kaeyleo/jekyll-theme-H2O&quot;&gt;源码及使用文档 →&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-realhome.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;新主题名叫”H2O”，基于Jekyll 3.0.x（使用&lt;code class=&quot;highlighter-rouge&quot;&gt;gem update jekyll&lt;/code&gt;升级Jekyll），Markdown的代码高亮不再支持pygments转而使用rouge，咱已经默认配置了 &lt;code class=&quot;highlighter-rouge&quot;&gt;highlighter: rouge&lt;/code&gt; 。用到的技术栈也很简单：引入jQuery类库，使用Sass编写样式，使用Gulp来编译Sass、合并压缩css、js，开源在&lt;a href=&quot;https://github.com/kaeyleo/jekyll-theme-H2O&quot;&gt;Github&lt;/a&gt;上，稍作配置即可用于你的Jekyll博客上。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-sketchdesign.png&quot; alt=&quot;Design with Sketch&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;使用Sketch完成H2O主题的原型设计&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-vs.jpg&quot; alt=&quot;My Jekyll themes&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;比之前漂亮不少吧，下面聊聊H2O的新特性。&lt;/p&gt;
+
+&lt;h2 id=&quot;新特性&quot;&gt;新特性&lt;/h2&gt;
+
+&lt;h3 id=&quot;主题配色&quot;&gt;主题配色&lt;/h3&gt;
+
+&lt;p&gt;支持两种主题配色——蓝色和粉色。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/kaeyleo/jekyll-theme-H2O/blob/master/screenshot/jekyll-theme-h2o-themecolor.jpg?raw=true&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;侧边栏&quot;&gt;侧边栏&lt;/h3&gt;
+
+&lt;p&gt;相比自己上一个版本的博客主题，首页增加了侧边栏，方便展示博主的个人信息和文章标签。&lt;/p&gt;
+
+&lt;h3 id=&quot;社交图标&quot;&gt;社交图标&lt;/h3&gt;
+
+&lt;p&gt;使用阿里的图标管理平台&lt;a href=&quot;http://iconfont.cn/&quot;&gt;Iconfont&lt;/a&gt;整理了一套&lt;strike&gt;墙内外&lt;/strike&gt;常用的社交图标，包括微博、知乎、掘金、简书、Github等十多个网站，鼠标悬停会显示该站的主题色。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-snstext.jpg&quot; alt=&quot;social iconfont&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;前后文导航&quot;&gt;前后文导航&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-nextpostnav.png&quot; alt=&quot;Next post navigator&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;自定义文章封面&quot;&gt;自定义文章封面&lt;/h3&gt;
+
+&lt;p&gt;在Markdown的&lt;a href=&quot;http://jekyll.com.cn/docs/frontmatter/&quot;&gt;文章头信息&lt;/a&gt;里添加cover参数来配置文章的封面图片，如果没有配置封面，则默认【主题色+底纹】的组合作为文章封面。值得一提的是，H2O有两种（粉、蓝）主题色和六种底纹（电路板、食物、云海、钻石等等）供你选择。&lt;/p&gt;
+
+&lt;h3 id=&quot;头图个性化底纹&quot;&gt;头图个性化底纹&lt;/h3&gt;
+
+&lt;p&gt;在没有图片的情况下单纯显示颜色会不会太无趣了点？于是想到了加入底纹元素，底纹素材是SVG格式的（保存在css样式里），加载比图片快很多。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-headerpatterns.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;代码高亮&quot;&gt;代码高亮&lt;/h3&gt;
+
+&lt;p&gt;模板引入了&lt;a href=&quot;http://prismjs.com&quot;&gt;Prism.js&lt;/a&gt;，一款轻量、可扩展的代码语法高亮库。&lt;/p&gt;
+
+&lt;p&gt;很多知名网站如&lt;a href=&quot;https://developer.mozilla.org/&quot;&gt;MDN&lt;/a&gt;、&lt;a href=&quot;https://css-tricks.com/&quot;&gt;css-tricks&lt;/a&gt;也在用它，JavaScript 之父 &lt;a href=&quot;https://brendaneich.com/&quot;&gt;Brendan Eich&lt;/a&gt; 也在个人博客上使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-highlight.png&quot; alt=&quot;代码高亮&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;遵循 &lt;a href=&quot;https://www.w3.org/TR/html5/grouping-content.html#the-pre-element&quot;&gt;HTML5&lt;/a&gt; 标准，Prism 使用语义化的 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;pre&amp;gt;&lt;/code&gt; 元素和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;code&amp;gt;&lt;/code&gt; 元素来标记代码区块：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;pre&amp;gt;&amp;lt;code class=&quot;language-css&quot;&amp;gt;p { color: red }&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在Markdown中你可以这样写：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ```css
+	p { color: red }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;支持语言：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;HTML&lt;/li&gt;
+  &lt;li&gt;CSS&lt;/li&gt;
+  &lt;li&gt;Sass&lt;/li&gt;
+  &lt;li&gt;JavaScript&lt;/li&gt;
+  &lt;li&gt;CoffeeScript&lt;/li&gt;
+  &lt;li&gt;Java&lt;/li&gt;
+  &lt;li&gt;C-like&lt;/li&gt;
+  &lt;li&gt;Swift&lt;/li&gt;
+  &lt;li&gt;PHP&lt;/li&gt;
+  &lt;li&gt;Go&lt;/li&gt;
+  &lt;li&gt;Python&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;第三方评论&quot;&gt;第三方评论&lt;/h3&gt;
+
+&lt;p&gt;由于多说关闭，又对国内其他第三方评论插件无感，所以将&lt;a href=&quot;https://disqus.com/&quot;&gt;Disqus&lt;/a&gt;列为首选（目前模板也只提供了这个），请自备梯子。&lt;/p&gt;
+
+&lt;h3 id=&quot;移动端优化&quot;&gt;移动端优化&lt;/h3&gt;
+
+&lt;p&gt;响应式设计，对手机和平板等移动设备做了优化。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-realm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;关于阅读体验&quot;&gt;关于阅读体验&lt;/h3&gt;
+
+&lt;p&gt;我认为在内容质量相同的情况下，出色的沉浸式阅读体验是博客的核心。&lt;/p&gt;
+
+&lt;p&gt;H2O在这方面还有很多需要完善的地方，比如：&lt;strike&gt;代码高亮&lt;/strike&gt;、夜间模式、查看大图…&lt;/p&gt;
+
+&lt;h3 id=&quot;其他特性&quot;&gt;其他特性：&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;网页标题SEO优化&lt;/li&gt;
+  &lt;li&gt;标签索引，点击标签跳转到标签目录，即可查看对应的全部文章&lt;/li&gt;
+  &lt;li&gt;漂亮&lt;/li&gt;
+  &lt;li&gt;好看&lt;/li&gt;
+  &lt;li&gt;美&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;最后&quot;&gt;最后&lt;/h2&gt;
+
+&lt;p&gt;本想趁这次机会将整站https化的，但折腾了半天发现弹性web托管并不支持，所以暂时搁置https的想法。另外，博客统计工具一直使用的是&lt;a href=&quot;https://tongji.baidu.com&quot;&gt;百度统计&lt;/a&gt;，这次新增了Google Analytics。&lt;/p&gt;
+
+&lt;p&gt;这次从0到1，独自设计、开发再到发布大约用了一周时间，也算完成一个小小的开源项目了，后续也将持续完善和更新，欢迎&lt;a href=&quot;https://github.com/kaeyleo/jekyll-theme-H2O&quot;&gt;Star&lt;/a&gt;。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Apr 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/04/18/new-theme-h2o.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/04/18/new-theme-h2o.html</guid>
+        
+        <category>jekyll</category>
+        
+        <category>前端开发</category>
+        
+        <category>设计</category>
+        
+        
+        <category>技术</category>
+        
+      </item>
+    
+      <item>
+        <title>Hello Jekyll</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Transform your plain text into static websites and blogs.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;welcome&quot;&gt;Welcome&lt;/h3&gt;
+
+&lt;p&gt;This site aims to be a comprehensive guide to Jekyll. We’ll cover topics such as getting your site up and running, creating and managing your content, customizing the way your site works and looks, deploying to various environments, and give you some advice on participating in the future development of Jekyll itself.&lt;/p&gt;
+
+&lt;h3 id=&quot;so-what-is-jekyll-exactlypermalink&quot;&gt;So what is Jekyll, exactly?Permalink&lt;/h3&gt;
+
+&lt;p&gt;Jekyll is a simple, blog-aware, static site generator. It takes a template directory containing raw text files in various formats, runs it through a converter (like &lt;a href=&quot;https://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt;) and our &lt;a href=&quot;https://github.com/Shopify/liquid/wiki&quot;&gt;Liquid&lt;/a&gt; renderer, and spits out a complete, ready-to-publish static website suitable for serving with your favorite web server. Jekyll also happens to be the engine behind GitHub Pages, which means you can use Jekyll to host your project’s page, blog, or website from GitHub’s servers for free.&lt;/p&gt;
+
+&lt;h3 id=&quot;helpful-hintspermalink&quot;&gt;Helpful HintsPermalink&lt;/h3&gt;
+
+&lt;p&gt;Throughout this guide there are a number of small-but-handy pieces of information that can make using Jekyll easier, more interesting, and less hazardous. Here’s what to look out for.&lt;/p&gt;
+
+&lt;h3 id=&quot;video-test&quot;&gt;Video Test&lt;/h3&gt;
+
+&lt;iframe type=&quot;text/html&quot; width=&quot;100%&quot; height=&quot;385&quot; src=&quot;http://www.youtube.com/embed/gfmjMWjn-Xg&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Tue, 18 Apr 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/04/18/hello-jekyll.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/04/18/hello-jekyll.html</guid>
+        
+        <category>jekyll</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
