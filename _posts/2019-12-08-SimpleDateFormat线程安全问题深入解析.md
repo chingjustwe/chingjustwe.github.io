@@ -1,3 +1,11 @@
+---
+layout: post
+title: SimpleDateFormat线程安全问题深入解析
+date: 2019-12-08
+categories: Source Code
+tags: SimpleDateFormat, 线程安全, 多线程
+---
+
 # 背景
 
 众所周知，Java中的**SimpleDateFormat**不是线程安全的，在多线程下会出现意想不到的问题。本文将解析**SimpleDateFormat**线程不安全的具体原因，从而加深对**线程安全**的理解。
@@ -58,7 +66,7 @@ java.lang.NumberFormatException: empty String
 # 分析
 
 **SimpleDateFormat**继承自**DateFormat**这个抽象类，UML图如下：
-![SimpleDateFormat UML](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/articles/SourceCode/SimpleDateFormat%20Thread%20Safe/SimpleDateFormat%20UML.png)
+![SimpleDateFormat UML](/assets/img/article-img/SourceCode/SimpleDateFormat%20Thread%20Safe/SimpleDateFormat%20UML.png)
 
 **DateFormat**中有两个全局变量需要注意
 ~~~Java
@@ -127,7 +135,6 @@ public class SimpleDateFormat extends DateFormat {
         //这里的numberFormat就是上面分析过的那个全局变量，默认实例是DecimalFormat
         //text是代转字符串"2019/11/11 11:11:11", pos是位置，如2019会被转化为0.2019x10^4
         number = numberFormat.parse(text, pos);
-        }
         if (number != null) {
             //转化成int值，如0.2019x10^4会转化成2019
             value = number.intValue();
@@ -152,7 +159,7 @@ public class SimpleDateFormat extends DateFormat {
 //numberFormat.parse(text, pos)方法实现
 public class DecimalFormat extends NumberFormat {
 
-    public Number parse(String text, ParsePosition pos) {{
+    public Number parse(String text, ParsePosition pos) {
         //内部调用subparse方法，将text的内容set到digitList上
         if (!subparse(text, pos, positivePrefix, negativePrefix, digitList, false, status)) {
             return null;
