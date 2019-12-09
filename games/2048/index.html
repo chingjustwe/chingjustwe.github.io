@@ -194,9 +194,15 @@ let handler2048 = {};
 				this.startx = event.touches[0].pageX;
 				this.starty = event.touches[0].pageY;
 			});
+                        window.ontouchmove=function(e){
+                            e.preventDefault && e.preventDefault();
+                            e.returnValue=false;
+                            e.stopPropagation && e.stopPropagation();
+                            return false;
+                        };
 			document.addEventListener('touchmove', (event) => {
 				event.preventDefault();
-			});
+			}, {passive: false});//capitable with IOS and Android
 			document.addEventListener('touchend', (event) => {
 				this.endx = event.changedTouches[0].pageX;
 				this.endy = event.changedTouches[0].pageY;
