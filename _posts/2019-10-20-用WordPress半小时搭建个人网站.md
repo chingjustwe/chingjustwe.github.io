@@ -1,4 +1,12 @@
-## 前言
+---
+layout: post
+title: 2019-10-20-用WordPress半小时搭建个人网站
+date: 2019-10-20
+categories: Handbook
+tags: WordPress, Self Website, Blog, LAMP 
+---
+
+# 前言
 
 本篇文章将介绍如何基于WordPress快速搭建个人网站。
 
@@ -34,13 +42,13 @@ Apache默认监听端口80,配置文件在
 >/var/www/html/
 
 这时候我们在浏览器里，通过机器的ip或者hostname访问80端口，如[http://101.132.67.54:80](http://101.132.67.54:80)，就可以看到Apache的欢迎页面了
-![apache welcome page](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20wordpress/apache_welcome.png)
+![apache welcome page](assets/img/article-img/Handbook/build%20wordpress/apache_welcome.png)
 
 一般我们不需要做额外的配置。如果需要修改端口，只需要修改**ports.conf**中的**Listen**参数，因为**apache2.conf**中include了文件**ports.conf**。
 
 在这里，如果遇到http请求访问不通，需要查一下防火墙的设置，将端口加入白名单。
 同时对于云主机，出于安全考虑可能厂家对端口也默认设置了一些规则，拿阿里云的机器举例子，需要自己在控制台配置规则，打开相应端口
-![ACS rule](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/build%20wordpress/rule.png)
+![ACS rule](assets/img/article-img/Handbook/build%20wordpress/rule.png)
 #### MySQL
 - 安装MySQL
 ```
@@ -85,7 +93,7 @@ phpinfo();
 ?>
 ```
 保存之后，浏览器访问**info.php**这个文件，如[http://101.132.67.54/info.php](http://101.132.67.54:80/info.php)，可以看到PHP的信息页面
-![php info page](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20wordpress/php_welcome.png)
+![php info page](assets/img/article-img/Handbook/build%20wordpress/php_welcome.png)
 # 安装WordPress
 - 下载WordPress
 直接从官网下载最新版本到本地
@@ -105,7 +113,7 @@ sudo chown -R www-data:www-data /var/www/html/
 sudo chmod -R 755 /var/www/html/
 ```
 如此一来，就可以从浏览器访问到**WordPress**的服务了，如访问[http://101.132.67.54](http://101.132.67.54)，应该可以看到欢迎页面
-![WordPress welcome page](https://raw.githubusercontent.com/chingjustwe/my-blogs/master/Handbook/build%20wordpress/word_press_start.png)
+![WordPress welcome page](assets/img/article-img/Handbook/build%20wordpress/word_press_start.png)
 - 配置WordPress
 这里有两个方式，一个方式是直接从浏览器安装，填写数据库连接信息。另一个方式是修改手动配置数据库信息：
 1. 创建配置文件
@@ -125,6 +133,6 @@ define( 'DB_PASSWORD', '${your_password}' );
 define( 'DB_HOST', 'localhost' );
 ```
 至此，大工告成，可以用**WordPress**写文章了~
-![first blog](https://raw.githubusercontent.com/chingjustwe/chingjustwe.github.io/master/Handbook/build%20wordpress/blog_preview.png)
+![first blog](assets/img/article-img/Handbook/build%20wordpress/blog_preview.png)
 # 总结
 通过**WordPress**可以快速地搭建一个个人网站，需要安装**LAMP**的环境。
