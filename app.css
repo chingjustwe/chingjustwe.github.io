@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * Jekyll Theme Style
  * - author: liaokeyu (liaokeyu.com)
@@ -8,11 +9,9 @@
 @font-face {
   font-family: "Merriweather";
   src: url("../fonts/Merriweather-Black.ttf"); }
-
 @font-face {
   font-family: "Merriweather-Light";
   src: url("../fonts/Merriweather-Light.ttf"); }
-
 /*** Base ***/
 html, body {
   height: 100%; }
@@ -626,7 +625,7 @@ a {
   padding: 0 0 32px; }
   .markdown-body .highlight {
     margin: 0 0 16px;
-    overflow: scroll; }
+    /** overflow: scroll;  修复代码高亮 显示两个 scroll的问题 **/ }
   .markdown-body img {
     transition: .3s; }
   .markdown-body ul li p, .markdown-body ol li p {
@@ -868,28 +867,30 @@ a {
       font-size: 42px; }
     .home-banner h3 {
       font-size: 22px; } }
-
 @media screen and (max-width: 960px) {
   .g-container {
     width: auto; }
+
   .article-list {
     float: none;
     margin: 0 auto; }
+
   .g-sidebar, .search-card {
     display: none; }
+
   .pagination .page-num {
     display: none; }
   .pagination .page-link {
     width: 56px; } }
-
 @media screen and (max-width: 768px) {
   .post-wrapper, .markdown-body, .read-next {
     width: 92%; }
+
   .post-content .post-subtitle {
     width: 92%; }
+
   .author-detail .author-card {
     width: 92%; } }
-
 @media screen and (max-width: 695px) {
   .g-header {
     position: absolute;
@@ -919,6 +920,7 @@ a {
           font-weight: bold;
           color: #A5A8B0;
           opacity: 1; }
+
   .author-detail .author-card .sns-links {
     margin-top: 24px; }
     .author-detail .author-card .sns-links li {
@@ -929,8 +931,10 @@ a {
         line-height: 40px; }
   .author-detail .comment {
     width: 90%; }
+
   .read-next {
     display: block; }
+
   .read-next-item {
     margin-bottom: 16px; }
     .read-next-item:first-child {
@@ -944,23 +948,30 @@ a {
       width: 90%;
       margin-left: 5%;
       margin-top: 45px; }
+
   .g-banner {
     padding: 0 20px; }
+
   .home-banner h3, .tags-banner h3 {
     margin-top: 8px; }
+
   .home-content {
     margin-top: 0; }
+
   .article-list, .tags-content {
     width: 100%; }
+
   .tags-content {
     margin-top: 0; }
+
   .tags-banner {
     height: 300px; }
+
   .tags-list {
     padding: 0 0 24px; }
+
   .g-footer {
     padding: 30px 0; } }
-
 @media screen and (max-width: 500px) {
   .home-banner {
     height: 400px; }
@@ -972,8 +983,10 @@ a {
       margin-top: 2px;
       font-size: 18px;
       letter-spacing: 6px; }
+
   .home-content {
     margin-bottom: 32px; }
+
   .article-list .article-item {
     padding: 20px 16px;
     margin-bottom: 8px;
@@ -998,17 +1011,21 @@ a {
       .article-list .article-item .post-meta .post-date {
         float: left;
         margin-left: 5px; }
+
   .pagination .page-links {
     box-shadow: none; }
+
   .post-header {
     padding: 0;
     height: 360px; }
+
   .post-wrapper .post-tags {
     margin: 100px 0 8px; }
   .post-wrapper h1 {
     font-family: "Helvetica Neue", Helvetica, Arial, "Pingfang SC", "Microsoft Yahei", Sans-serif; }
   .post-wrapper .post-meta {
     margin-top: 16px; }
+
   .post-content {
     padding-top: 20px; }
     .post-content .post-subtitle {
@@ -1016,6 +1033,7 @@ a {
       margin-bottom: 32px; }
       .post-content .post-subtitle:before {
         height: 0; }
+
   .markdown-body p, .markdown-body ul > li {
     font-size: 16px;
     font-weight: 300;
@@ -1034,7 +1052,6 @@ a {
     letter-spacing: 1px;
     color: #888;
     word-break: break-all; } }
-
 @media screen and (max-width: 376px) {
   .home-banner h2 {
     font-size: 26px;
@@ -1042,3 +1059,5 @@ a {
   .home-banner h3 {
     margin-top: 4px;
     font-size: 16px; } }
+
+/*# sourceMappingURL=app.css.map */

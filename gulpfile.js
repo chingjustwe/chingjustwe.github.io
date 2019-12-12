@@ -5,24 +5,26 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'); // 文件重命名
 
 gulp.task('scripts', function(){
-    gulp.src('dev/js/index.js')
+    gulp.src('src/js/main.js')
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('assets/js'))
 });
 
 gulp.task('sass', function(){
-    gulp.src('dev/sass/app.scss')
+    gulp.src('src/sass/app.scss')
         .pipe(sass())
-        .pipe(gulp.dest('dev/sass'))
+        .pipe(gulp.dest('src/sass'))
         .pipe(cleanCSS())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('assets/css'));
 });
 
 gulp.task('watch', function(){
-    gulp.watch('dev/sass/*.scss', ['sass']);
-    gulp.watch('dev/js/*.js', ['scripts']);
+    gulp.watch('src/sass/*.scss', ['sass']);
+    gulp.watch('src/js/*.js', ['scripts']);
 });
+
+console.log("test");
 
 gulp.task('default', ['scripts', 'sass', 'watch']);

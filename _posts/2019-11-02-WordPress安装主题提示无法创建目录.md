@@ -17,15 +17,14 @@ tags: WordPress, Theme, 安装主题
 ![文件夹原始权限](/assets/img/article-img/Notebook/wordpress%20unable%20to%20add%20plugin/theme%20privilege.png)
 
 发现访问权限已经是**755**了，但是用户和组是**root**，于是执行以下命令
-```
-chown nginx:nginx themes
-```
+
+> chown nginx:nginx themes
 
 然后重新upload，果然成功了
 ![上传成功](/assets/img/article-img/Notebook/wordpress%20unable%20to%20add%20plugin/wordpress%20upload%20theme%20success.png)
 
 同时，为了保证当主题比较大的时候我们也能上传成功，最好调大**PHP**和**Nginx**对file size的控制，在**nginx.conf**增加参数*client_max_body_size*
-~~~
+~~~JavaScript
 http {
     client_max_body_size 32m;
     (other parameters)

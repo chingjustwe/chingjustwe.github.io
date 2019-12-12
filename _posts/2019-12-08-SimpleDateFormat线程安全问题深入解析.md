@@ -32,7 +32,7 @@ public class SimpleDateFormatTest {
 ~~~
 
 部分输出如下：
-~~~
+~~~Java
 Mon Nov 11 11:11:11 GMT 2019
 Thu Jan 01 00:00:00 GMT 1970
 java.lang.NumberFormatException: For input string: ""
@@ -120,7 +120,7 @@ public Date parse(String text, ParsePosition pos)
 > 3. 调用**calb.establish(calendar)**方法，把暂存在**calb**里的数据设置到全局变量**calendar**里。
 > 4. 现在**calendar**里已经包含转换过的日期数据，最后调用**Calendar.getTime()**方法返回日期。
 
-#### 问题之一
+## 问题之一
 下面看一下**subParse**方法里面做了什么，实现上有什么问题。先看代码(省略掉了一些无关紧要的代码)：
 ~~~Java
 public class SimpleDateFormat extends DateFormat {
@@ -212,7 +212,7 @@ public class DecimalFormat extends NumberFormat {
 
 看到这里，有点并发编程经验的同学估计就能看出问题了。在**subparse**这个方法里面不加保护，当多个线程同时对全局变量**digits(digitList)**进行操作时，这个变量很可能是个无效的值。比如线程A把值设置了一半，另一个线程B把值又清零初始化了。于是线程A在后面**digitList.getDouble()**和**digitList.getLong()**的时候要么得到意料之外的值，要么直接报错**NumberFormatException**。
 
-#### 问题之二
+## 问题之二
 
 那么后面的步骤有没有问题呢？继续往下看。
 前面说到，方法会先把parse好的值放到**CalendarBuilder**型的临时变量**calb**里面，然后调用**establish**方法，将**calb**中缓存的值设置到**SimpleDateFormat**的**calendar**变量中，下面看看**establish**方法：
