@@ -1,5 +1,5 @@
 # my blogs source code
-This repo mainly records my personal blogs, some of those blogs are also published on other platform like **[My Personal Blog](www.nightfield.com)**, **[CSDN](https://blog.csdn.net/u010793917)**, **[Jianshu](https://www.jianshu.com/u/71e46e823a40)**, **[OSChina](https://my.oschina.net/u/2411391)**.
+This repo mainly records my personal blogs, some of those blogs are also published on other platform like **[My Personal Blog](https://www.nightfield.com)**, **[CSDN](https://blog.csdn.net/u010793917)**, **[Jianshu](https://www.jianshu.com/u/71e46e823a40)**, **[OSChina](https://my.oschina.net/u/2411391)**.
 The reason why I using **Git** to backup those articles, is to take the advantage of the **Distributed Management**. If I want to build a new personal blog, or restore the blog from disaster, I can easily checkout those articles as **Source Code** and start again quickly.
 
 All Comments are welcome, also you can repost any of the writings you like, please keep the original link, Thanks.
