@@ -1,87 +1,109 @@
-# Site settings 配置站点
-title: "Night Field's Blog"
-description: '非典型程序员。爱生活，爱技术。'
-keyword: "Night Field, Night Field's Blog, Java, Front-End, Back-end, 后端开发, Spring"
-url: '' # your host
+# Site settings
+title: "Night Field' Blog"
+SEOTitle: "NF的博客 | Night Field's Blog"
+header-img: src/img/moon.jpg
+email: chingjustwe@gmail.com
+description: "Say Go, Let's Go."
+keyword: "Night Field, NF, Night Field's Blog, Java, NF的博客, Night Field的博客"
+url: "https://chingjustwe.github.io"              # your host, for absolute URL
+baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
-# when build blog on server, if you don't need baseurl, you should leave this value blank.
-# 在服务器上建站时，如果你不需要子域名，请将这一格留空
-# if you're using GitHub Pages, set baseurl to your blog's .
-# 如果你在使用 GitHub Pages, 请将 baseurl 设置为你的网址的子域名
-# for example, if your site is "kaeyleo.github.io", then this url should leave blank.
-# 例如，当你的域名是 "kaeyleo.github.io"  时，这个 url 需要留空
-# but if your created a repo named "myblog", and the site is "kaeyleo.github.io/myblog", change baseurl to '/myblog'
-# 但是，如果你创建了一个叫 "myblog" 的网站，此时网址会变成 "kaeyleo.github.io/myblog" ，这时再将 baseurl 设置为 '/myblog'
-baseurl: ''
+# Publish posts or collection documents with a future date.
+future: true
 
-# Navigation links
-nav:
-  home: '/'
-  tags: '/tags.html'
+# SNS settings
+RSS: false
+weibo_username:     chingjustwe
+zhihu_username:     chingjustwe
+github_username:    chingjustwe
+#twitter_username:   chingjustwe
+facebook_username:  chingjustwe
+#linkedin_username:  firstname-lastname-idxxxx
 
-# Footer
-footer:
-  since: 2019
 
-# Author 配置博主信息
-author: 'Night Field'
-nickname: 'Ching'
-bio: 'Java Engineer. Stay Hungary, Stay Foolish.'
-avatar: '/assets/img/profile.jpg'
-
-# Search
-search: true
-
-# Night mode
-nightMode: true
-
-# Comments 评论功能
-comments:
-  disqus: false
-  disqus_url: 'https://liaokeyu.disqus.com/embed.js'
-
-# MathJax 公式支持 by Ray-Eldath
-mathjax: true
-
-# Share
-social-share: true
-social-share-items: ['wechat', 'weibo', 'douban', 'twitter', 'github']
-
-# theme color 主题皮肤
-theme-color: 'default'  # pink or default
-
-# Post header background patterns (when the post no cover): circuitBoard, overlappingCircles, food, glamorous, ticTacToe, seaOfClouds
-postPatterns: 'food'
-
-# SNS settings 配置社交网站
-# url: email, weibo, zhihu, twitter, instagram, juejin, github, douban, facebook, dribble, uicn, jianshu, medium, linkedin
-sns:
-  weibo: '//weibo.com/lovecolcol'
-  juejin: '//juejin.im/user/57a6f434165abd006159b4cc'
-  instagram: '//www.instagram.com/steveliaocn'
-  github: '//github.com/chingjustwe'
-
-# Tags 设置标签
-recommend-tags: true # whether or not display recommend-tags on the sidebar
-recommend-condition-size: 12 # a tag will be recommended if the size of it is more than this value
 
 # Build settings
-paginate: 6
-paginate_path: 'page:num'
-exclude: ['node_modules', 'src', 'package.json', 'gulpfile.js', '.gitignore', 'README.md']
-
-# Markdown
-markdown: kramdown
+# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
-kramdown:
-  input: GFM
+permalink: pretty
+paginate: 10
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
+anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
+# If you have timezone issue (e.g. #68) in China, uncomment to use this:
+#timezone: CN  
 
-# RSS
-RSS: false
 
-# Permalink
-# See: https://github.com/kaeyleo/jekyll-theme-H2O/issues/35
-permalink: /:year/:month/:day/:title.html
 
-# Plugins
+# Gems
+# from PR#40, to support local preview for Jekyll 3.0
+# make sure you have this gem installed
+# `$ gem install jekyll-paginate`
 plugins: [jekyll-paginate]
+
+
+
+# Markdown settings
+# replace redcarpet to kramdown,
+# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+markdown: kramdown
+kramdown:
+  input: GFM                            # use Github Flavored Markdown !important
+  syntax_highlighter_opts:
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+
+
+# Disqus settings
+disqus_username: nightfield
+
+# Netease settings
+netease_comment: false
+
+
+
+# Analytics settings
+# Baidu Analytics 
+# ba_track_id: [your track id]
+
+# Google Analytics
+ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
+ga_domain: chingjustwe.github.io
+
+
+
+# Sidebar settings
+sidebar: true                           # whether or not using Sidebar.
+sidebar-about-description: "非典型程序员"
+sidebar-avatar: /src/img/profile.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+
+
+
+# Featured Tags
+featured-tags: true                     # whether or not using Feature-Tags
+featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+
+
+
+# Progressive Web Apps
+chrome-tab-theme-color: "#000000"
+service-worker: true
+
+
+
+# MathJax rendering for layout:page (e.g. post preview)
+page-mathjax: true
+
+
+
+# Friends
+friends: [
+    {
+        title: "Self",
+        href: "http://www.nightfield.com.cn/"
+    }
+]

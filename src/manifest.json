@@ -1,0 +1,19 @@
+{
+  "name": "Night Field's Blog",
+  "short_name": "NF Blog",
+  "description": "About an engineer & designer who loves web.",
+  "icons": [{
+    "src": "src/icons/128.png",
+    "sizes": "128x128",
+    "type": "src/image/png"
+  }, {
+    "src": "src/icons/512.png",
+    "sizes": "512x512",
+    "type": "src/image/png"
+  }],
+  "background_color": "#fff",
+  "theme_color": "#000",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

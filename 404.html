@@ -1,16 +1,16 @@
 ---
 layout: default
-description: "Sorry, Page Not Found :("
+title: 404
+hide-in-nav: true
+description: "Page Not Found :("
+header-img: "src/img/404-bg.jpg"
+permalink: /404.html
 ---
 
-{% include header.html %}
 
-<header class="g-banner np-banner {{ site.postPatterns | prepend: 'post-pattern-' }}" data-theme="{{ site.theme-color }}">
-    <div class="post-wrapper">
-        <h1>404</h1>
-        <span class="subheading">{{ page.description }}</span>
-        <a href="{{ site.nav.home }}" class="btn">Back to home</a>
-    </div>
-</header>
+<!-- Page Header -->
+{% include intro-header.html type="page" short='true' %}
 
-
+<script>
+	document.body.classList.add('page-fullscreen');
+</script>

@@ -3,7 +3,11 @@ layout: post
 title: SimpleDateFormat线程安全问题深入解析
 date: 2019-12-08
 categories: Source Code
-tags: SimpleDateFormat, 线程安全, 多线程
+tags: 
+  - Java
+  - SimpleDateFormat
+  - 线程安全
+  - 多线程
 ---
 
 # 背景

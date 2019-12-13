@@ -1,19 +1,25 @@
 {
-  "name": "a",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.0.4",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^2.1.2"
-  },
-  "dependencies": {}
+    "name": "nf-blog",
+    "title": "Night Field's Blog",
+    "author": "Night Field <chingjustwe@gmail.com>",
+    "version": "1.8.2",
+    "homepage": "http://chingjustwe.github.io",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chingjustwe/chingjustwe.github.io"
+    },
+    "bugs": "https://github.com/chingjustwe/chingjustwe.github.io/issues",
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-contrib-less": "~0.11.4",
+        "grunt-contrib-watch": "~0.6.1",
+        "grunt-banner": "~0.2.3",
+        "grunt-contrib-uglify": "~0.5.1"
+    },
+    "scripts": {
+        "start" : "jekyll serve -w -l --host 0.0.0.0 --port 4000",
+        "dev"   : "grunt watch & npm run start",
+        "boil"  : "git push boilerplate boilerplate:master",
+        "push"  : "git push origin master --tag"
+    }
 }

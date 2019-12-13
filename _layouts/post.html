@@ -1,145 +1,173 @@
-<!DOCTYPE html>
-<html>
-{% include post-head.html %}
-<body>
-  <input id="nm-switch" type="hidden" value="{{ site.nightMode }}"> {% include header.html %}
+---
+layout: default
+---
 
-  <header
-    class="g-banner post-header {{ site.postPatterns | prepend: 'post-pattern-' }} {{ site.theme-color | prepend: 'bgcolor-' }} {% unless page.cover %}post-no-cover{% endunless %}"
-    data-theme="{{ site.theme-color }}"
-  >
-    <div class="post-wrapper">
-      <div class="post-tags">
-        {% if page.tags.size > 0 %}
-          {% for tag in page.tags  %}
-            <a href="{{ "/tags.html#" | append: tag | relative_url }}" class="post-tag">{{ tag }}</a>
-          {% endfor %}
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+{% include intro-header.html type='post' %}
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                {% if page.multilingual %}
+                    {% include multilingual-sel.html %}
+                {% endif %}
+
+				{{ content }}
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    {% if page.previous.url %}
+                    <li class="previous">
+                        <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">
+                        Previous<br>
+                        <span>{{page.previous.title}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if page.next.url %}
+                    <li class="next">
+                        <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">
+                        Next<br>
+                        <span>{{page.next.title}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <hr style="visibility: hidden;">
+
+                {% if site.disqus_username %}
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                {% endif %}
+
+                {% if site.netease_comment %}
+                <!-- 网易云跟帖 评论框 start -->
+                <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+                <!-- 网易云跟帖 评论框 end -->
+                {% endif %}
+            </div>  
+
+    <!-- Side Catalog Container -->
+        {% if page.catalog %}
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         {% endif %}
-      </div>
-      <h1>{{ page.title }}</h1>
-      <div class="post-meta">
-        <span class="post-meta-item"><i class="iconfont icon-author"></i>{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}</span>
-        <time class="post-meta-item" datetime="{{ page.date | date:"%y-%m-%d" }}"><i class="iconfont icon-date"></i>{{ page.date | date_to_string }}</time>
-      </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                {% include featured-tags.html bottom=true %}
+
+                <!-- Friends Blog -->
+                {% include friends.html %}
+            </div>
+        </div>
     </div>
-    {% if page.cover %}
-    <div class="filter"></div>
-      <div class="post-cover" style="background: url('{{ page.cover | relative_url }}') center no-repeat; background-size: cover;"></div>
-    {% endif %}
-  </header>
+</article>
 
-  <div class="post-content visible">
-    {% if page.subtitle %}
-    <h2 class="post-subtitle">{{ page.subtitle }}</h2>
-    {% endif %}
+<!-- add support for mathjax by voleking-->
+{% if page.mathjax %}
+  {% include mathjax_support.html %}
+{% endif %}
 
-    <article class="markdown-body">
-      {{ page.content }}
-    </article>
+{% if site.netease_comment %}
+<!-- 网易云跟帖JS代码 start -->
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "de25fc98a6fe48b3bc8a7ae765da99a0",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+<!-- 网易云跟帖JS代码 end -->
+{% endif %}
 
-    {% if site.social-share %}
-    <div class="social-share-wrapper">
-      <div class="social-share"></div>
-    </div>
-    {% endif %}
-  </div>
 
-  <section class="author-detail">
-    <section class="post-footer-item author-card">
-      <div class="avatar">
-        <img src="{{ site.avatar | relative_url }}" alt="">
-      </div>
-      <div class="author-name" rel="author">{{ site.author }}</div>
-      <div class="bio">
-        <p>{{ site.bio }}</p>
-      </div>
-      {% if site.sns.size > 0 %}
-      <ul class="sns-links">
-        {% for s in site.sns %}
-        <li>
-          <a href="{{ s[1] }}" target="_blank">
-            <i class="iconfont icon-{{ s[0] }}"></i>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </section>
-    <section class="post-footer-item read-next">
-      {% if page.next.url %}
-      <div class="read-next-item">
-        <a href="{{ page.next.url | relative_url }}" class="read-next-link"></a>
-        <section>
-          <span>{{ page.next.title }}</span>
-          <p>{{ page.next.excerpt | strip_html | strip_newlines | truncate: 60}}</p>
-        </section>
-        {% if page.next.cover %}
-        <div class="filter"></div>
-        <img src="{{ page.next.cover | relative_url }}" alt="">
-        {% endif %}
-     </div>
-      {% endif %}
+{% if site.disqus_username %}
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "{{site.disqus_username}}";
+    var disqus_identifier = "{{page.id}}";
+    var disqus_url = "{{site.url}}{{page.url}}";
 
-      {% if page.previous.url %}
-      <div class="read-next-item">
-        <a href="{{ page.previous.url | relative_url }}" class="read-next-link"></a>
-          <section>
-            <span>{{ page.previous.title }}</span>
-            <p>{{ page.previous.excerpt | strip_html | strip_newlines | truncate: 60}}</p>
-          </section>
-          {% if page.previous.cover %}
-          <div class="filter"></div>
-          <img src="{{ page.previous.cover | relative_url }}" alt="">
-          {% endif %}
-      </div>
-      {% endif %}
-    </section>
-    {% if site.comments.disqus %}
-    <section class="post-footer-item comment">
-        <div id="disqus_thread"></div>
-    </section>
-    {% endif %}
-  </section>
-
-  {% include footer.html %}
-
-  <script src="{{ "/assets/js/social-share.min.js" | relative_url }}"></script>
-  <script>
-    socialShare('.social-share', {
-      sites: [
-        {% for i in site.social-share-items %}
-          '{{ i }}'
-          {% if forloop.last == false %},
-          {% endif %}
-        {% endfor %}
-      ],
-      wechatQrcodeTitle: "分享到微信朋友圈",
-      wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
-    });
-  </script>
-
-  {% if site.comments.disqus %}
-  <script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() { // DON'T EDIT BELOW THIS LINE
-      var d = document, s = d.createElement('script');
-      s.src = '{{ site.comments.disqus_url }}';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
-  </script>
-  {% endif %}
+</script>
+<!-- disqus 公共JS代码 end -->
+{% endif %}
 
-  <script src="{{ "/assets/js/prism.js" | relative_url }}"></script>
-  <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
-</body>
 
-</html>
+{% if site.anchorjs %}
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+{% endif %}
