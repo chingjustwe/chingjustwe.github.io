@@ -70,7 +70,7 @@ java.lang.NumberFormatException: empty String
 # 分析
 
 **SimpleDateFormat**继承自**DateFormat**这个抽象类，UML图如下：
-![SimpleDateFormat UML](/assets/img/article-img/SourceCode/SimpleDateFormat%20Thread%20Safe/SimpleDateFormat%20UML.png)
+![SimpleDateFormat UML](/src/img/article-img/SourceCode/SimpleDateFormat%20Thread%20Safe/SimpleDateFormat%20UML.png)
 
 **DateFormat**中有两个全局变量需要注意
 ~~~Java
