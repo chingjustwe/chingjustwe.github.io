@@ -17,7 +17,7 @@ tags:
 # 例子
 
 简单的测试代码，当多个线程同时调用**parse**方法的时候会出问题：
-~~~Java
+~~~java
 public class SimpleDateFormatTest {
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -36,7 +36,7 @@ public class SimpleDateFormatTest {
 ~~~
 
 部分输出如下：
-~~~Java
+~~~java
 Mon Nov 11 11:11:11 GMT 2019
 Thu Jan 01 00:00:00 GMT 1970
 java.lang.NumberFormatException: For input string: ""
@@ -73,7 +73,7 @@ java.lang.NumberFormatException: empty String
 ![SimpleDateFormat UML](/src/img/article-img/SourceCode/SimpleDateFormat%20Thread%20Safe/SimpleDateFormat%20UML.png)
 
 **DateFormat**中有两个全局变量需要注意
-~~~Java
+~~~java
 public abstract class DateFormat extends Format {
 
     //日历变量，作为DateFormat的辅助
@@ -92,7 +92,7 @@ public class DecimalFormat extends NumberFormat {
 
 这两个变量的初始化在**SimpleDateFormat**的构造方法里初始化。
 看了类结构，我们仔细分析一下**DateFormat**的**parse**方法，直接上代码(省略掉了一些无关紧要的代码)：
-~~~Java
+~~~java
 public Date parse(String text, ParsePosition pos)
 {
     ......
@@ -126,7 +126,7 @@ public Date parse(String text, ParsePosition pos)
 
 ## 问题之一
 下面看一下**subParse**方法里面做了什么，实现上有什么问题。先看代码(省略掉了一些无关紧要的代码)：
-~~~Java
+~~~java
 public class SimpleDateFormat extends DateFormat {
     private int subParse(String text, int start, int patternCharIndex, int count,
                     boolean obeyCount, boolean[] ambiguousYear,
@@ -220,7 +220,7 @@ public class DecimalFormat extends NumberFormat {
 
 那么后面的步骤有没有问题呢？继续往下看。
 前面说到，方法会先把parse好的值放到**CalendarBuilder**型的临时变量**calb**里面，然后调用**establish**方法，将**calb**中缓存的值设置到**SimpleDateFormat**的**calendar**变量中，下面看看**establish**方法：
-~~~Java
+~~~java
 class CalendarBuilder {
     Calendar establish(Calendar cal) {
         ......
@@ -252,14 +252,14 @@ class CalendarBuilder {
 
 # 解决办法
 对于线程安全的解决办法，给方法加同步**synchronize**是最简单的，相当于线程只能一个一个地访问**parse**方法：
-~~~Java
+~~~java
     synchronize (this) {
         System.out.println(format.parse("2019/11/11 11:11:11"));
     }
 ~~~
 
 当然更common的使用姿势是配合**ThreadLocal**使用，相当于给每个线程都定义了一个**format**变量，线程间互不影响：
-~~~Java
+~~~java
     private ThreadLocal<SimpleDateFormat> format = new ThreadLocal<SimpleDateFormat>(){  
         @Override  
         protected SimpleDateFormat initialValue() {  

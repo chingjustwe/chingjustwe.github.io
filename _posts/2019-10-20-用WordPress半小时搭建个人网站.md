@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2019-10-20-用WordPress半小时搭建个人网站
+title: 用WordPress半小时搭建个人网站
 date: 2019-10-20
 categories: Handbook
 tags: 

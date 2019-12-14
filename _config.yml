@@ -25,6 +25,7 @@ facebook_username:  chingjustwe
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
+highlighter_theme: default  # highlighter theme: github/colorful/sublime/dark/default
 permalink: pretty
 paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
@@ -48,10 +49,11 @@ plugins: [jekyll-paginate]
 # document: http://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
 kramdown:
+  syntax_highlighter: rouge
   input: GFM                            # use Github Flavored Markdown !important
   syntax_highlighter_opts:
     span:
-      line_numbers: false
+      line_numbers: true
     block:
       line_numbers: true
       start_line: 1
@@ -96,7 +98,7 @@ service-worker: true
 
 
 # MathJax rendering for layout:page (e.g. post preview)
-page-mathjax: true
+mathjax: false
 
 
 

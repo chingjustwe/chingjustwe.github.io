@@ -26,7 +26,7 @@ tags:
 ![上传成功](/src/img/article-img/Notebook/wordpress%20unable%20to%20add%20plugin/wordpress%20upload%20theme%20success.png)
 
 同时，为了保证当主题比较大的时候我们也能上传成功，最好调大**PHP**和**Nginx**对file size的控制，在**nginx.conf**增加参数*client_max_body_size*
-~~~JavaScript
+~~~javascript
 http {
     client_max_body_size 32m;
     (other parameters)
