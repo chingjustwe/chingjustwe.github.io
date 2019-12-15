@@ -13,8 +13,8 @@ future: true
 
 # SNS settings
 RSS: false
-weibo_username:     chingjustwe
-zhihu_username:     chingjustwe
+weibo_username:     2274042304
+zhihu_username:     chi-zhong-qiang-47
 github_username:    chingjustwe
 #twitter_username:   chingjustwe
 facebook_username:  chingjustwe
@@ -89,7 +89,7 @@ featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
 
 # Category
-max_category_size: 6
+max_category_size: 5
 
 
 

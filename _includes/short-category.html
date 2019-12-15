@@ -12,5 +12,8 @@
         {% capture title %}{{ titles[index] | strip_newlines }}{% endcapture %}
         <li><a href="{{'/category/?category=' | prepend: site.baseurl }}{{ title | cgi_escape }}" rel="nofollow">{{ title }} <sup>{{ site.categories[title].size }}</sup></a></li>
         {% endif %}{% endfor %}
+        {% if max_category_size < site.categories.size %}
+        <li><a href="{{'/category/' | prepend: site.baseurl }}" rel="nofollow">......</a></li>
+        {% endif %}
     </ul>
 </section>

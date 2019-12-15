@@ -19,9 +19,9 @@ Java工程师（码农），现就职于杭州Cisco。是的，不加班。
 
 **Jekyll**通过**markdown**编写文章，可以保留博客原文；**Github Pages**原生支持**Jekyll**静态页面部署。
 
-于是花了一点时间搭了基于**Jekyll**的[个人网站](chingjustwe.github.io)
+于是花了一点时间搭了基于**Jekyll**的[个人网站](https://chingjustwe.github.io)
 
-欢迎大家移步本人的[正式博客](www.nightfield.com.cn)，该博客是基于**Typecho**搭建的。
+欢迎大家移步本人的[正式博客](https://www.nightfield.com.cn)，该博客是基于**Typecho**搭建的。
 
 博客文章欢迎转载，同时烦请署名并附上原文链接。
 

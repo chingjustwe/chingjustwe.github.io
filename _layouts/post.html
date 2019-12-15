@@ -20,11 +20,6 @@ layout: default
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <!-- Multi-Lingual -->
-                {% if page.multilingual %}
-                    {% include multilingual-sel.html %}
-                {% endif %}
-
 				{{ content }}
 
                 <hr style="visibility: hidden;">
@@ -86,11 +81,15 @@ layout: default
                 col-md-10 col-md-offset-1
                 sidebar-container">
 
+                <hr class="hidden-sm hidden-xs">
                 <!-- Featured Tags -->
-                {% include featured-tags.html bottom=true %}
+                {% include featured-tags.html %}
+
+                <!-- Category -->
+                {% include short-category.html %}
 
                 <!-- Friends Blog -->
-                {% include friends.html %}
+                <!-- {% include friends.html %} -->
             </div>
         </div>
     </div>
