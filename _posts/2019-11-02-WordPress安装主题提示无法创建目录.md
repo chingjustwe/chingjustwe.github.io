@@ -2,7 +2,8 @@
 layout: post
 title: WordPress安装主题提示无法创建目录
 date: 2019-11-02
-categories: Notebook
+categories: 
+  - Notebook
 tags: 
   - WordPress
   - WordPress Theme

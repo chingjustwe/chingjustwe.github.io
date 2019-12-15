@@ -2,7 +2,8 @@
 layout: post
 title: SimpleDateFormat线程安全问题深入解析
 date: 2019-12-08
-categories: Source Code
+categories: 
+  - Source Code
 tags: 
   - Java
   - SimpleDateFormat

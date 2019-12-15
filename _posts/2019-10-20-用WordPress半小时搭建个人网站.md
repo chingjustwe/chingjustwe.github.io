@@ -2,7 +2,8 @@
 layout: post
 title: 用WordPress半小时搭建个人网站
 date: 2019-10-20
-categories: Handbook
+categories: 
+  - Handbook
 tags: 
   - WordPress
   - Self Website

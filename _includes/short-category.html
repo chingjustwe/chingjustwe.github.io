@@ -1,0 +1,16 @@
+{% capture categories %}{% for category in site.categories %}{{ category | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign titles = categories | split:',' | sort %}
+{% assign max_category_size = site.categories.size %}
+{% if site.max_category_size %}
+    {% assign max_category_size = site.max_category_size %}
+{% endif %}
+
+<section>
+    <h5><a href="{{'/category/' | prepend: site.baseurl }}">CATEGORY</a></h5>
+    <ul class="ul-start-10">
+        {% for index in (0..site.categories.size) %}{% if index < max_category_size %}
+        {% capture title %}{{ titles[index] | strip_newlines }}{% endcapture %}
+        <li><a href="{{'/category/?category=' | prepend: site.baseurl }}{{ title | cgi_escape }}" rel="nofollow">{{ title }} <sup>{{ site.categories[title].size }}</sup></a></li>
+        {% endif %}{% endfor %}
+    </ul>
+</section>

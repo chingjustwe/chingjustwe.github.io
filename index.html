@@ -4,7 +4,7 @@ description: "Make it work, make it right, make it fast."
 ---
 
 {% for post in paginator.posts %}
-<div class="post-preview">
+<section class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">
             {{ post.title }}
@@ -25,8 +25,7 @@ description: "Make it work, make it right, make it fast."
     <p class="post-meta">
         Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
     </p>
-</div>
-<hr>
+</section>
 {% endfor %}
 
 <!-- Pager -->
