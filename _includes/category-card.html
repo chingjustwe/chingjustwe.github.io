@@ -6,7 +6,7 @@
 {% endif %}
 
 <section>
-    <h5><a href="{{'/category/' | prepend: site.baseurl }}">CATEGORY</a></h5>
+    <h5><a href="{{'/category/' | prepend: site.baseurl }}">CATEGORIES</a></h5>
     <ul class="ul-start-10">
         {% for index in (0..site.categories.size) %}{% if index < max_category_size %}
         {% capture title %}{{ titles[index] | strip_newlines }}{% endcapture %}
