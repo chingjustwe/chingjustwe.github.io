@@ -16,7 +16,6 @@ const PRECACHE_LIST = [
   "./",
   "./offline.html",
   "./src/js/jquery.min.js",
-  "./src/js/bootstrap.min.js",
   "./src/js/app.min.js",
   "./src/js/snackbar.js",
   "./src/img/icon_wechat.png",
@@ -24,7 +23,6 @@ const PRECACHE_LIST = [
   "./src/img/home-bg.jpg",
   "./src/img/404-bg.jpg",
   "./src/css/app.min.css",
-  "./src/css/bootstrap.min.css"
   // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css",
   // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3",
   // "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"
