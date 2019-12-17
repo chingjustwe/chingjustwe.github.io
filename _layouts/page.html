@@ -28,14 +28,22 @@ layout: default
             col-xs-12
             sidebar-container
         ">
-        <!-- Short About -->
+        <!-- Sidebar Search -->
+        {% if site.sidebar-search %}
+        {% include search-section.html %}
+        {% endif %}
+        
+        <!-- Sidebar About -->
         {% include about-card.html %}
         
-        <!-- Featured Tags -->
+        <!-- Sidebar Featured Tags -->
         {% include featured-tags.html %}
 
-        <!-- Category -->
+        <!-- Sidebar Category -->
+        
+        {% if site.sidebar-category %}
         {% include category-card.html %}
+        {% endif %}
 
         <!-- Friends Blog -->
         <!-- {% include friends.html %} -->
