@@ -26,7 +26,7 @@ Java Coder们都知道，Java提供了**JMX(Java Management Extensions) attach**
 ~~~
 
 **MBeanExporter**是Spring提供的一个工具类，可以用来注册自定义的MBean，只需要将目标类以map键值对的形式添加到**beans**这个属性里面。通过Jmx我们可以访问到MBean上的Public参数，从而拿到运行时的metrics。
-![MBean]()
+![MBean](/src/img/article-img/Notebook/InstanceAlreadyExistsException/MBean.png)
 上述是JConsole的一个截图，最后一个Tab就是由JDK默认暴露出来的一些MBean的信息。
 
 ## 问题描述
