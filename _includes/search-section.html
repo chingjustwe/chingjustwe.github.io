@@ -6,5 +6,24 @@
         </span>
     </div>
 </section>
+<span id="searchHint" style="display: none;">No Result Found</span>
 
-<script src="{{ '/src/js/search.js ' | prepend: site.baseurl }}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    let searcher = nfSearcher.newSearcher({
+        $searchInput: $("#searchInput"),
+        $searchBtn: $("#searchBtn"),
+        $searchHint: $("#searchHint"),
+        $groups: $(".category_item"),
+        $items: $(".post_item")
+    });
+    searcher.register();
+
+    let url = new URL(window.location.href);
+    let searchText = url.searchParams.get("search");
+    if (searchText) {
+        searcher.search(searchText);
+        searcher.$searchInput.val(searchText);
+    }
+});
+</script>

@@ -19,27 +19,29 @@ header-img: "src/img/space.jpg"
 
       <!-- category section -->
       <div class="mini-post-list js-result">
-        <section id="archives">
+        <section id="category">
           {% for category in site.categories %}
             {% capture category_name %}{{ category | first }}{% endcapture %}
-            <span class="fa listing-seperator">
-              <span class="tag-text">{{ category_name }}</span>
-            </span>
-            {% for post in site.categories[category_name] %}
-            <div class="post-preview item">
-              <a href="{{ post.url | prepend: site.baseurl }}">
-                <h2 class="post-title">
-                  {{ post.date | date: "%Y-%m-%d" }} &raquo; {{ post.title }}
-                </h2>
-                {% if post.subtitle %}
-                <h3 class="post-subtitle">
-                  {{ post.subtitle }}
-                </h3>
-                {% endif %}
-              </a>
-              <hr>
+            <div id="{{ category_name | downcase }}" class="category_item">
+              <span class="fa listing-seperator">
+                <span class="tag-text">{{ category_name }}</span>
+              </span>
+              {% for post in site.categories[category_name] %}
+              <div class="post-preview post_item" id="{{ post.id }}">
+                <a href="{{ post.url | prepend: site.baseurl }}">
+                  <h2 class="post-title">
+                    {{ post.date | date: "%Y-%m-%d" }} &raquo; {{ post.title }}
+                  </h2>
+                  {% if post.subtitle %}
+                  <h3 class="post-subtitle">
+                    {{ post.subtitle }}
+                  </h3>
+                  {% endif %}
+                </a>
+                <hr>
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %}
           {% endfor %}
         </section>
       </div>

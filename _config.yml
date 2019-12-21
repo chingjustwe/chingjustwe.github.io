@@ -84,7 +84,7 @@ sidebar-avatar: /src/img/profile.jpg    # use absolute URL, seeing it's used in 
 sidebar-search: true                    # enable sidebar search section
 sidebar-category: true                  # enable sidebar category section
 
-search-fulltext: true                   # when false: only search "Tags", "Title", "Categories", "URL", "Date", when true: will search full post
+search-fulltext: false                   # when false: only search "Tags", "Title", "Categories", "URL", when true: will search full post, full text search may affect the experence
 
 # Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags
