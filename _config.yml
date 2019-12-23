@@ -1,5 +1,5 @@
 # Site settings
-title: "Night Field' Blog"
+title: "Night Field's Blog"
 SEOTitle: "NF的博客 | Night Field's Blog"
 header-img: src/img/moon.jpg
 email: chingjustwe@gmail.com
@@ -70,11 +70,11 @@ netease_comment: false
 
 # Analytics settings
 # Baidu Analytics 
-# ba_track_id: [your track id]
+ba_track_id: d30d45cf1449b6bae4ab7cf650247456
 
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: chingjustwe.github.io
+ga_track_id: 'UA-154949650-2'            # Format: UA-xxxxxx-xx
+ga_domain: blog.nightfield.com.cn
 
 
 
