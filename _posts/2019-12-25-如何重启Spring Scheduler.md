@@ -18,7 +18,7 @@ tags:
 
 ## Spring Quartz
 
-**Spring Quartz(http://www.quartz-scheduler.org/documentation/)**是一整套完整的**Cron Job**架构，可以完成复杂的任务调度需求，支持任务持久化，事务化，甚至分布式。如果是基于**Spring Quartz**做的Scheduler，那么重启比较简单，Task的管理类**Scheduler(https://javadoc.io/doc/org.quartz-scheduler/quartz/latest/index.html)**提供了非常多的方法，如*scheduleJob*，*unscheduleJob*，*rescheduleJob*，*deleteJob*，*addJob*等，通过这些方法的组合就以达到**重启**的目的，参考[此回答](https://stackoverflow.com/questions/15020625/quartz-how-to-shutdown-and-restart-the-scheduler)。
+[Spring Quartz](http://www.quartz-scheduler.org/documentation/)是一整套完整的**Cron Job**架构，可以完成复杂的任务调度需求，支持任务持久化，事务化，甚至分布式。如果是基于**Spring Quartz**做的Scheduler，那么重启比较简单，Task的管理类[Scheduler](https://javadoc.io/doc/org.quartz-scheduler/quartz/latest/index.html)**提供了非常多的方法，如*scheduleJob*，*unscheduleJob*，*rescheduleJob*，*deleteJob*，*addJob*等，通过这些方法的组合就以达到**重启**的目的，参考[此回答](https://stackoverflow.com/questions/15020625/quartz-how-to-shutdown-and-restart-the-scheduler)。
 
 ## Spring Scheduler
 
