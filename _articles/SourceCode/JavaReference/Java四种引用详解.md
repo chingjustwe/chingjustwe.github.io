@@ -6,7 +6,7 @@ categories:
   - SourceCode
 tags:
   - Java
-  - Java引用类型
+  - Java Reference
   - Garbage Collector
 ---
 
