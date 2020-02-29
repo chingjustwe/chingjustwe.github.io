@@ -1,0 +1,124 @@
+---
+layout: post
+title: 用Java递归设置文件的用户/组/权限
+date: 2020-01-25
+categories:
+  - QuickNote
+tags:
+  - Java
+  - Nio
+---
+
+# 前言
+
+自从*1.7*版本开始，Java引入了*Nio包*，提供了更强大的*IO*功能。
+本文简单介绍如何用**java.nio.file.attribute**下的工具类修改文件的权限，用户和组。因为本类库是针对**Posix**类系统的的，所以主要适用于**Linux**和**Mac**上（实测Win7不支持）。
+
+# 测试样例
+
+测试代码如下：
+
+~~~java
+public class FileTest {
+    public static void main(String[] args) throws Exception {
+        // 检查操作系统是否支持posix。
+        // 一般像mac和linux都支持，经测试win7不支持
+        boolean supportPosix = FileSystems.getDefault().supportedFileAttributeViews().contains("posix");
+        if (!supportPosix) {
+            System.out.println("Your OS does not support posix.");
+            return;
+        }
+
+        // 将要设置的权限：用户，组，以及三组读/写/执行的权限
+        String owner = "testowner";
+        String group = "testgroup";
+        PosixFilePermission[] permissions = {
+                PosixFilePermission.OWNER_READ,
+                PosixFilePermission.OWNER_WRITE,
+                PosixFilePermission.OWNER_EXECUTE,
+                PosixFilePermission.GROUP_READ,
+                PosixFilePermission.GROUP_WRITE,
+                PosixFilePermission.GROUP_EXECUTE,
+                PosixFilePermission.OTHERS_READ,
+                PosixFilePermission.OTHERS_WRITE,
+                PosixFilePermission.OTHERS_EXECUTE,
+        };
+        changePermission("/opt/test", true, owner, group, permissions);
+    }
+
+    private static void changePermission(String pathStr, boolean isRecurisive, String owner, String group, PosixFilePermission... permissions) {
+        Path path = Paths.get(pathStr);
+        if (!Files.exists(path)) {
+            System.out.println(pathStr + " not exists!");
+            return;
+        };
+        try {
+            System.out.format("Before, %s ", pathStr);
+            readTargetPermission(path);
+
+            // 设置permission，相当于linux命令chmod
+            Set<PosixFilePermission> perms = new HashSet<>();
+            for (PosixFilePermission permission : permissions) {
+                perms.add(permission);
+            }
+            Files.setPosixFilePermissions(path, perms);
+
+            // 设置用户和组，相当于linux命令chown
+            // 要保证用户和组存在，否则lookupService会抛UserPrincipalNotFoundException
+            UserPrincipalLookupService lookupService = FileSystems.getDefault().getUserPrincipalLookupService();
+            GroupPrincipal groupPrincipal = lookupService.lookupPrincipalByGroupName(group);
+            UserPrincipal userPrincipal = lookupService.lookupPrincipalByName(owner);
+            PosixFileAttributeView view = Files.getFileAttributeView(path, PosixFileAttributeView.class);
+            view.setGroup(groupPrincipal);
+            view.setOwner(userPrincipal);
+
+            System.out.format("After, %s ", pathStr);
+            readTargetPermission(path);
+        } catch (IOException e) {
+            if (e instanceof UserPrincipalNotFoundException) {
+                System.out.format("group '%s' or owner '%s' not exist%n", group, owner);
+                return;
+            }
+            System.out.format("%s set permission failed%n", pathStr);
+            e.printStackTrace();
+        }
+
+        // 当是目录的时候，递归设置文件权限
+        if (isRecurisive && Files.isDirectory(path)) {
+            try (DirectoryStream<Path> ds = Files.newDirectoryStream(path)) {
+                for (Path subPath : ds) {
+                    changePermission(pathStr + File.separator + subPath.getFileName(), true, owner, group, permissions);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // print current permission of folder/file
+    private static void readTargetPermission(Path path) throws IOException {
+        Set<PosixFilePermission> filePermissions = Files.readAttributes(path, PosixFileAttributes.class).permissions();
+        GroupPrincipal fileGroup = Files.readAttributes(path, PosixFileAttributes.class).group();
+        UserPrincipal fileOwner = Files.readAttributes(path, PosixFileAttributes.class).owner();
+        System.out.format("permissions: %s, user: %s, group: %s%n", PosixFilePermissions.toString(filePermissions), fileOwner, fileGroup); 
+    }
+}
+~~~
+
+控制台输出如下：
+~~~
+Before, /opt/test permissions: rwx------, user: root, group: root
+After, /opt/test permissions: rwxrwxrwx, user: testowner, group: testgroup
+Before, /opt/test/testFolder permissions: rwx------, user: root, group: root
+After, /opt/test/testFolder permissions: rwxrwxrwx, user: testowner, group: testgroup
+Before, /opt/test/testFolder/testFile2 permissions: rw-------, user: root, group: root
+After, /opt/test/testFolder/testFile2 permissions: rwxrwxrwx, user: testowner, group: testgroup
+Before, /opt/test/testFile permissions: rw-------, user: root, group: root
+After, /opt/test/testFile permissions: rwxrwxrwx, user: testowner, group: testgroup
+~~~
+
+通过对比，目录以及该目录下的所有子目录和文件，权限都变成了**777**，用户都由root变为了**testowner**，组都有root变为了**testgroup**。
+
+# 总结
+
+Java Nio提供了强大及友好的类库，方便我们对文件进行各种操作。
