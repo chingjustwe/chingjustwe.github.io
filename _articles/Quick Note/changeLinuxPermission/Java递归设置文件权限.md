@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 用Java递归设置文件的用户/组/权限
-date: 2020-01-25
+title: 用Java递归设置文件的用户,组和权限
+date: 2020-02-16
 categories:
   - QuickNote
 tags:
@@ -11,7 +11,7 @@ tags:
 
 # 前言
 
-自从*1.7*版本开始，Java引入了*Nio包*，提供了更强大的*IO*功能。
+自从*1.4*版本开始，Java引入了*Nio包*，提供了更强大的*IO*功能。
 本文简单介绍如何用**java.nio.file.attribute**下的工具类修改文件的权限，用户和组。因为本类库是针对**Posix**类系统的的，所以主要适用于**Linux**和**Mac**上（实测Win7不支持）。
 
 # 测试样例
