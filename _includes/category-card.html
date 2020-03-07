@@ -1,8 +1,8 @@
 {% capture categories %}{% for category in site.categories %}{{ category | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
 {% assign titles = categories | split:',' | sort %}
-{% assign max_category_size = site.categories.size %}
+{% assign max_category_size = site.categories.size | plus: 0 %}
 {% if site.max_category_size %}
-    {% assign max_category_size = site.max_category_size %}
+    {% assign max_category_size = site.max_category_size | plus: 0 %}
 {% endif %}
 
 <section>
