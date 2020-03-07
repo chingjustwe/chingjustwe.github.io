@@ -3,7 +3,7 @@ layout: post
 title: 深入理解ThreadLocal
 date: 2020-01-01
 categories:
-  - SourceCode
+  - Source Code
 tags:
   - Java
   - 多线程
