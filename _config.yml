@@ -5,7 +5,7 @@ header-img: src/img/moon.jpg
 email: chingjustwe@gmail.com
 description: "Say Go, Let's Go."
 keyword: "Night Field, NF, Night Field's Blog, Java, NF的博客, Night Field的博客"
-url: "https://chingjustwe.github.io"              # your host, for absolute URL
+url: "https://blog.nightfield.com.cn"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
