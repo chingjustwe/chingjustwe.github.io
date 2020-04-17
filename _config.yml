@@ -61,7 +61,9 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: fieldnight
+#disqus_username: fieldnight
+disqus_username: blog-nightfield
+
 
 # Netease settings
 netease_comment: true
