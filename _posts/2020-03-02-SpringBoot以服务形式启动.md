@@ -131,8 +131,8 @@ export JAVA_OPTS="-Xmx4096m -Xms4096m"
 添加配置文件之后，重启服务，再次查看服务进程：
 ~~~shell
 [nightfield@mthf2mulsvr001 bin]$ ps -ef | grep myApp
-ciscowe+ 11343     1  0 14:13 ?        00:00:00 /bin/bash /homt/nightfield/myApp.jar
-ciscowe+ 11358 11343 48 14:13 ?        00:00:38 /usr/bin/java -Dsun.misc.URLClassPath.disableJarChecking=true -Xmx4096m -Xms4096m -jar /homt/nightfield/myApp.jar
+nightfi+ 11343     1  0 14:13 ?        00:00:00 /bin/bash /homt/nightfield/myApp.jar
+nightfi+ 11358 11343 48 14:13 ?        00:00:38 /usr/bin/java -Dsun.misc.URLClassPath.disableJarChecking=true -Xmx4096m -Xms4096m -jar /homt/nightfield/myApp.jar
 nightfi+ 11908 11884  0 14:14 pts/0    00:00:00 grep --color=auto myApp
 ~~~
 
