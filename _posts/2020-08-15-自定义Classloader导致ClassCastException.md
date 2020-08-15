@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 自定义Classloader导致ClassCastException，不要轻易破坏双亲委派模型
+title: 自定义Classloader导致ClassCastException
 date: 2020-08-15
 categories:
   - Notebook
