@@ -93,7 +93,7 @@ Exception in thread "main" java.lang.ClassCastException: cn.com.nightfield.jvm.c
 	at cn.com.nightfield.jvm.classloader.ClassLoaderTest.main(ClassLoaderTest.java:19)
 ~~~
 
-要想知道错误的根源，需要了解对象可以被cast的前提：对象必须是目标类的实例。从上述输出也可以看到，`instance instanceof Plugin`的结果是`false`，为什么呢？因为对于任意一个类，都需要由它的类加载器和这个类本身，共同确立其在`JVM`中的唯一性，也就是说，`JVM`中两个类是否相等，首先要看它们是不是由同一个类加载器加载的。如果不是的话，即使这两个类来自于同一个`class`文件，它们也不相等。
+要想知道错误的根源，需要了解对象可以被cast的前提：对象必须是目标类的实例。从上述输出也可以看到，`pluginInstance instanceof Plugin`的结果是`false`，为什么呢？因为对于任意一个类，都需要由它的类加载器和这个类本身，共同确立其在`JVM`中的唯一性，也就是说，`JVM`中两个类是否相等，首先要看它们是不是由同一个类加载器加载的。如果不是的话，即使这两个类来自于同一个`class`文件，它们也不相等。
 
 上例中，`Plugin`类处于`class path`下，默认是由`AppClassloader`来加载的；但是`pluginInstance`却是由`CustomizedClassLoader`加载出来的`class`的实例。`JVM`尝试将`CustomizedClassLoader.Plugin`转成`AppClassloader.Plugin`，必然会报错。
 
