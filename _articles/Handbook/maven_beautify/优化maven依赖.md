@@ -1,0 +1,167 @@
+---
+layout: post
+title: 优化 maven 依赖实践
+date: 2020-06-28
+categories:
+  - Handbook
+tags:
+  - Maven
+---
+
+# 背景
+**Maven** 是非常优秀的项目管理工具，我们可以方便地在 **pom** 文件里配置 **Java** 工程的依赖。但是随着项目的迭代和时间推移，**pom** 文件在新老需求的不断增删改之下变得越来越臃肿，到后来连自己都不知道哪些是有效依赖。
+
+下面将简单介绍如何用 **Maven** 插件 [maven dependency plugin](http://maven.apache.org/plugins/maven-dependency-plugin/index.html) 来解决这个问题。
+
+# maven dependency plugin
+`maven dependency plugin` 是一个强大的 **Maven** 依赖处理插件，官网介绍如下：
+> The dependency plugin provides the capability to manipulate artifacts. It can copy and/or unpack artifacts from local or remote repositories to a specified location.
+
+该插件可以将文件从本地或远程仓库复制 / 解压到指定的位置，相应的，我们比较熟知的 goal 可能是 [dependency:copy](http://maven.apache.org/components/plugins/maven-dependency-plugin/copy-mojo.html) 和 [dependency:unpack](http://maven.apache.org/components/plugins/maven-dependency-plugin/unpack-mojo.html)。但除此之外，**maven dependency plugin** 还提供了插件依赖分析的能力，与此对应的 goal 是 [dependency:analyze](http://maven.apache.org/plugins/maven-dependency-plugin/analyze-mojo.html)，这也是本文要介绍的重点。
+
+# dependency:analyze 使用
+此命令会扫描项目的依赖关系，并分析出哪些依赖是：
+- **被引用但未声明** (used and undeclared)：比如在工程中使用了某个类，但这个类的 **Maven** 依赖并没有配置在 **pom** 文件中。
+- **声明了但未被引用** (unused and declared)：在 **pom** 文件中声明了某个依赖，但是该依赖却没有在工程中被使用。
+
+假设我们新建一个 example 项目，同时添加 `jackson-databind` 和 `log4j` 的依赖，并配置 `maven-dependency-plugin`：
+~~~xml
+<dependencies>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.12.3</version>
+    </dependency>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.2.0</version>
+        </plugin>
+    </plugins>
+</build>
+~~~
+
+然后我们简单地定义一个 **Java Bean**，并带上 `JsonProperty` 注解：
+~~~java
+class Foo {
+    @JsonProperty(value = "myBar")
+    private String bar;
+
+    public String getBar() {
+        return bar;
+    }
+    public void setBar(String bar) {
+        this.bar = bar;
+    }
+}
+~~~
+
+最后我们试着跑一下 `dependency:analyze` 命令：
+~~~shell
+mvn dependency:analyze
+
+[WARNING] Used undeclared dependencies found:
+[WARNING]    com.fasterxml.jackson.core:jackson-annotations:jar:2.12.3:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    com.fasterxml.jackson.core:jackson-databind:jar:2.12.3:compile
+[WARNING]    log4j:log4j:jar:1.2.17:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.539 s
+~~~
+
+可以看到，控制台输出了几个 **WARNING**：
+- Used undeclared dependencies found：因为我们在工程中用到了来自于 `jackson-annotations` 包的 `JsonProperty` 注解，但是我们并没有在 **pom** 文件中声明此依赖包（此依赖其实是来自于 `jackson-databind` 的依赖）。
+- Unused declared dependencies found：我们在 **pom** 里面声明了 `jackson-databind` 和 `log4j` 的依赖，却没有在工程中的任何地方使用到。
+
+所以单单看我们工程中的代码，要想最小化工程的依赖，其实只需添加 `jackson-annotations` 就已足够：
+~~~xml
+<dependencies>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>2.12.3</version>
+    </dependency>
+</dependencies>
+~~~
+
+由此可见，通过 `maven dependency plugin` 的依赖分析能力，我们可以一目了然的知道应该如何优化项目依赖。
+
+# 插件缺陷
+`dependency:analyze` 内部默认使用了 [Maven Dependency Analyzer](http://maven.apache.org/shared/maven-dependency-analyzer/) 作为依赖分析工具，由于它是基于字节码的扫描，而非源代码，所以无法检测某些特殊情况。除此之外，配置文件中的依赖引用也无法被扫描到。
+
+## 只能扫描直接依赖
+比如我们在工程中需要配置 **RabbitMQ**，但代码只使用了 `org.springframework.amqp.core.AmqpTemplate`，该依赖来自于
+~~~xml
+<dependency>
+    <groupId>org.springframework.amqp</groupId>
+    <artifactId>spring-amqp</artifactId>
+    <version>1.3.5.RELEASE</version>
+</dependency>
+~~~
+但假如在 **pom** 里面只添加此依赖，则启动会报错：
+~~~
+Caused by: org.springframework.beans.factory.parsing.BeanDefinitionParsingException: Configuration problem: Unable to locate Spring NamespaceHandler for XML schema namespace [http://www.springframework.org/schema/rabbit]
+Offending resource: URL [file:./target/test-14.4.0/WEB-INF/classes/spring-rabbit.xml]
+~~~
+因为 **spring-amqp** 只是 **RabbitMQ** 的一个模块，相当于只是拼图的一部分，若希望得到完整的功能，最终应该引入如下包：
+~~~xml
+<dependency>
+    <groupId>org.springframework.amqp</groupId>
+    <artifactId>spring-rabbit</artifactId>
+    <version>1.3.5.RELEASE</version>
+</dependency>
+~~~
+它提供了 **Spring** 解析所需的配置文件如 **spring.handlers**，**spring.schemas** 等。
+
+## 无法解析配置文件
+如果有些 **class** 只在配置文件中被引用，则无法被插件扫描。如 `applicationContext.xml` 中配置的 `org.springframework.jdbc.datasource.DataSourceTransactionManager`，引用了来自 `spring-jdbc` 的包，但它依然会被认为是 **Unused declared dependencies**。
+~~~xml
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+~~~
+
+包括在 web.xml 中的配置，也无法被识别：
+~~~xml
+<servlet>
+    <servlet-name>Jersey REST service</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+</servlet>
+~~~
+上述依赖来自 `jersey-servlet` 包，也会被认为是 **Unused declared dependencies**。
+
+类似的，在 application.properties 中的配置，也无法解析：
+~~~
+driver=oracle.jdbc.driver.OracleDriver
+~~~
+上述依赖来自 `ojdbc8` 包，也会被认为是 **Unused declared dependencies**。
+
+## workaround
+那对于这些无法被插件扫描到的依赖，又不想让它报 **Warning** 该怎么办呢？插件也支持手动指定依赖，比如要强制添加 `spring-jdbc`，可以通过如下方式：
+~~~xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <configuration>
+        <usedDependencies>
+            <dependency>org.springframework:spring-jdbc</dependency>
+        </usedDependencies>
+    </configuration>
+</plugin>
+~~~
+
+# 总结
+`maven dependency plugin` 除了提供最常用的依赖复制和解压等功能以外，还提供了依赖分析的功能，我们可以利用它来构建最小化的项目依赖，可以说是强迫症程序员的福音。但因为它内部是根据字节码来扫描依赖，所以在有些情况会造成误判，需要特别注意。
+
+[maven dependency plugin](http://maven.apache.org/plugins/maven-dependency-plugin/index.html)
