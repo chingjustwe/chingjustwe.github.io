@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "领域驱动设计（Domain-Driven Design）知识指南"
-date: 2026-06-08
+date: 2023-12-08
 categories:
   - Tech
 tags:
