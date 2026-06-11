@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeCode — The scratch-built AI coding agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #070B17;
+      color: #E2E8F0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ===== Scrollbar ===== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #070B17; }
+    ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+    /* ===== Typography ===== */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ===== Noise Texture Overlay ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ===== Grid Background ===== */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== Glow Effects ===== */
+    .glow-1 {
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-2 {
+      position: fixed;
+      bottom: -20%;
+      right: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(ellipse, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== Navbar ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(7, 11, 23, 0.8);
+      backdrop-filter: blur(20px) saturate(1.5);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.08);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      color: #F8FAFC;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #22C55E, #10B981);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #070B17;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #94A3B8;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #22C55E; }
+    .nav-cta {
+      background: linear-gradient(135deg, #22C55E, #10B981);
+      color: #070B17 !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+    }
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #E2E8F0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'JetBrains Mono', monospace;
+      color: #22C55E;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.6s ease;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: #22C55E;
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-size: clamp(40px, 8vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #F8FAFC 0%, #22C55E 50%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #22C55E, #10B981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: #94A3B8;
+      max-width: 640px;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    /* ===== Terminal Hero ===== */
+    .terminal-hero {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      background: #0D1117;
+      border: 1px solid rgba(34, 197, 94, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+    .terminal-hero-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-dot:nth-child(1) { background: #EF4444; }
+    .terminal-dot:nth-child(2) { background: #F59E0B; }
+    .terminal-dot:nth-child(3) { background: #22C55E; }
+    .terminal-hero-body {
+      padding: 20px 24px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #CBD5E1;
+    }
+    .terminal-hero-body .prompt { color: #22C55E; }
+    .terminal-hero-body .cmd { color: #E2E8F0; }
+    .terminal-hero-body .output { color: #94A3B8; }
+    .terminal-hero-body .highlight { color: #F59E0B; }
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #22C55E;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #22C55E, #10B981);
+      color: #070B17;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(34, 197, 94, 0.35);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ===== Section Common ===== */
+    section {
+      padding: 100px 0;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: #22C55E;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 16px;
+      color: #F8FAFC;
+    }
+    .section-sub {
+      color: #94A3B8;
+      max-width: 600px;
+      font-size: 16px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-header .section-sub {
+      margin: 0 auto;
+    }
+
+    /* ===== Features ===== */
+    #features { position: relative; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+      background: rgba(34, 197, 94, 0.06);
+      border: 1px solid rgba(34, 197, 94, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .feature-card {
+      background: #0A0F1D;
+      padding: 40px 32px;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .feature-card:hover {
+      background: #0D1525;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.03), transparent);
+      transition: opacity 0.3s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    .feature-icon.code { background: rgba(34, 197, 94, 0.1); color: #22C55E; }
+    .feature-icon.cube { background: rgba(99, 102, 241, 0.1); color: #818CF8; }
+    .feature-icon.shell { background: rgba(251, 191, 36, 0.1); color: #FBBF24; }
+    .feature-icon.math { background: rgba(236, 72, 153, 0.1); color: #F472B6; }
+    .feature-icon.shield { background: rgba(52, 211, 153, 0.1); color: #34D399; }
+    .feature-icon.plugin { background: rgba(147, 51, 234, 0.1); color: #A78BFA; }
+    .feature-icon.repeat { background: rgba(56, 189, 248, 0.1); color: #38BDF8; }
+    .feature-icon.multi { background: rgba(251, 146, 60, 0.1); color: #FB923C; }
+
+    .feature-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #F1F5F9;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: #64748B;
+      line-height: 1.7;
+    }
+
+    /* ===== Architecture ===== */
+    .arch-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .arch-tree {
+      background: #0D1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 32px;
+      font-size: 13px;
+      line-height: 2;
+      overflow-x: auto;
+    }
+    .arch-tree .dir { color: #22C55E; }
+    .arch-tree .file { color: #94A3B8; }
+    .arch-tree .highlight-file { color: #FBBF24; }
+    .arch-tree .comment { color: #475569; font-style: italic; }
+    .arch-tree .pipe { color: #475569; }
+    .arch-desc {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .arch-step {
+      display: flex;
+      gap: 16px;
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+    .arch-step:hover {
+      border-color: rgba(34, 197, 94, 0.2);
+      background: rgba(34, 197, 94, 0.03);
+    }
+    .arch-step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.1);
+      color: #22C55E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .arch-step h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .arch-step p {
+      font-size: 13px;
+      color: #64748B;
+    }
+
+    /* ===== Quick Start ===== */
+    .quickstart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .qs-card {
+      background: #0D1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .qs-card h3 {
+      font-size: 14px;
+      color: #22C55E;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qs-card pre {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.8;
+      overflow-x: auto;
+      color: #CBD5E1;
+      position: relative;
+    }
+    .qs-card pre .green { color: #22C55E; }
+    .qs-card pre .gray { color: #64748B; }
+    .qs-card pre .yellow { color: #FBBF24; }
+    .qs-card pre .pink { color: #F472B6; }
+
+    .qs-copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      color: #64748B;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.2s;
+    }
+    .qs-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #E2E8F0;
+    }
+
+    .providers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .provider-chip {
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 100px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #94A3B8;
+    }
+
+    /* ===== Tools ===== */
+    .tools-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .tools-table thead th {
+      text-align: left;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #475569;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .tools-table tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #94A3B8;
+    }
+    .tools-table tbody td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: #FBBF24;
+      font-weight: 500;
+    }
+    .tools-table tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ===== Stats ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 40px 24px;
+      background: #0D1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(34, 197, 94, 0.2);
+      transform: translateY(-2px);
+    }
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 36px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22C55E, #10B981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #64748B;
+      margin-top: 8px;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 48px 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-brand p {
+      font-size: 13px;
+      color: #64748B;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+    .footer-col h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #22C55E; }
+    .footer-bottom {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #475569;
+    }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a {
+      color: #475569;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-bottom-links a:hover { color: #94A3B8; }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(7, 11, 23, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 24px;
+        border-bottom: 1px solid rgba(34, 197, 94, 0.08);
+        gap: 16px;
+        align-items: flex-start;
+      }
+      .arch-wrapper { grid-template-columns: 1fr; }
+      .quickstart-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .hero h1 { font-size: 32px; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .arch-wrapper { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <!-- ===== Navbar ===== -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">
+        <div class="logo-icon">{ }</div>
+        CodeCode
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="https://github.com/chingjustwe/CodeCode" target="_blank">GitHub</a></li>
+        <li><a href="#quickstart" class="nav-cta">Get Started</a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      v0.1.0 — Zero-runtime-dependency coding agent
+    </div>
+    <h1>Build better code<br/>with <span>CodeCode</span></h1>
+    <p>
+      A minimal, scratch-built AI coding agent client in TypeScript.
+      No LangChain. No abstraction layers. Just the core loop, your tools, and the LLM.
+    </p>
+
+    <div class="terminal-hero">
+      <div class="terminal-hero-header">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span style="margin-left:12px;font-size:11px;color:#475569;font-family:'JetBrains Mono',monospace;">bash — codecode</span>
+      </div>
+      <div class="terminal-hero-body">
+        <div><span class="prompt">$</span> <span class="cmd">npx codecode init my-project</span></div>
+        <div><span class="output">  ✓ Creating project structure</span></div>
+        <div><span class="output">  ✓ Installing dependencies</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">cd my-project && codecode</span></div>
+        <div><span class="output">  ⚡ CodeCode agent ready. How can I help?</span></div>
+        <div><span class="prompt">></span> <span class="highlight">Create a REST API with Express and TypeScript</span></div>
+        <div><span class="output">  🤖 Planning implementation...</span></div>
+        <div><span class="output">  📝 Writing files...</span></div>
+        <div><span class="output">  ✓ API created! Running at <span class="highlight">localhost:3000</span></span></div>
+        <div><span class="prompt">></span> <span class="cmd"></span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#quickstart" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Get Started
+      </a>
+      <a href="https://github.com/chingjustwe/CodeCode" target="_blank" class="btn btn-secondary">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== Stats ===== -->
+  <section style="padding-top:0;">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card fade-in">
+          <div class="stat-number">Zero</div>
+          <div class="stat-label">Runtime Dependencies</div>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-number">7</div>
+          <div class="stat-label">LLM Providers Supported</div>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">TypeScript, Built from Scratch</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Features ===== -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Features</div>
+        <h2 class="section-title">Everything you need, nothing you don't</h2>
+        <p class="section-sub">
+          A carefully crafted set of native tools and a lean agent loop — no frameworks, no bloat.
+        </p>
+      </div>
+
+      <div class="features-grid fade-in">
+        <div class="feature-card">
+          <div class="feature-icon code">{ }</div>
+          <h3>Multi-Provider LLM Support</h3>
+          <p>OpenAI, Anthropic, DeepSeek, MiniMax, Kimi, GLM — swap providers with a single environment variable.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon repeat">⟳</div>
+          <h3>Autonomous Agent Loop</h3>
+          <p>The LLM decides which tool to call, receives results, and iterates until the task is done. Max 20 rounds per task.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon cube">◇</div>
+          <h3>Native Tool Calling</h3>
+          <p>Tools defined as JSON Schema and dispatched natively by the LLM — no string parsing, no regex hacks.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon shell">›_</div>
+          <h3>Bash Execution</h3>
+          <p>Run shell commands safely inside the workspace with a 30-second hardcoded timeout.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon shield">◇</div>
+          <h3>File Sandboxing</h3>
+          <p>Path-traversal protection via <code>safePath()</code>. All file operations are locked to the current workspace.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon math">∑</div>
+          <h3>Safe Calculator</h3>
+          <p>Sanitized <code>eval</code> for math — only <code>0-9 + - * / . ( )</code> characters pass through.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon plugin">↗</div>
+          <h3>Skill System</h3>
+          <p>Extend the agent with installable skills. Skills live as <code>SKILL.md</code> files under <code>~/.codecode/skills/</code>.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon multi">☰</div>
+          <h3>Memory & Context Compression</h3>
+          <p>Persistent memories across sessions and automatic context compression to stay within token limits.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Architecture ===== -->
+  <section id="architecture">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Architecture</div>
+        <h2 class="section-title">How it works</h2>
+        <p class="section-sub">
+          From entry point to agent loop — a zero-abstraction design you can read in an afternoon.
+        </p>
+      </div>
+
+      <div class="arch-wrapper fade-in">
+        <div class="arch-tree">
+          <span class="dir">src/</span><br/>
+          <span class="pipe">├──</span> <span class="highlight-file">index.ts</span> <span class="comment">// Entry: createModel() → startRepl() → agentLoop()</span><br/>
+          <span class="pipe">├──</span> <span class="dir">agent/</span><br/>
+          <span class="pipe">│   ├──</span> <span class="highlight-file">loop.ts</span>      <span class="comment">// The core agent loop (max 20 rounds)</span><br/>
+          <span class="pipe">│   ├──</span> <span class="highlight-file">prompt.ts</span>    <span class="comment">// System prompt builder with dynamic context</span><br/>
+          <span class="pipe">│   └──</span> <span class="dir">tools/</span><br/>
+          <span class="pipe">│       ├──</span> <span class="file">index.ts</span>   <span class="comment">// Tool registry</span><br/>
+          <span class="pipe">│       ├──</span> <span class="file">bash.ts</span>    <span class="comment">// Shell execution</span><br/>
+          <span class="pipe">│       ├──</span> <span class="file">read.ts</span>    <span class="comment">// File reader</span><br/>
+          <span class="pipe">│       ├──</span> <span class="file">write.ts</span>   <span class="comment">// File writer</span><br/>
+          <span class="pipe">│       ├──</span> <span class="file">edit.ts</span>    <span class="comment">// Text replacement</span><br/>
+          <span class="pipe">│       ├──</span> <span class="file">calculate.ts</span> <span class="comment">// Safe eval</span><br/>
+          <span class="pipe">│       └──</span> <span class="dir">todo/</span><br/>
+          <span class="pipe">├──</span> <span class="dir">cli/</span><br/>
+          <span class="pipe">│   └──</span> <span class="file">repl.ts</span>     <span class="comment">// Interactive REPL</span><br/>
+          <span class="pipe">├──</span> <span class="dir">llm/</span><br/>
+          <span class="pipe">│   ├──</span> <span class="file">factory.ts</span>  <span class="comment">// Model factory (dispatches by framework)</span><br/>
+          <span class="pipe">│   ├──</span> <span class="file">providers.ts</span> <span class="comment">// Provider configurations</span><br/>
+          <span class="pipe">│   ├──</span> <span class="file">openai-chat-model.ts</span><br/>
+          <span class="pipe">│   └──</span> <span class="file">anthropic-chat-model.ts</span><br/>
+          <span class="pipe">└──</span> <span class="dir">types/</span><br/>
+          <span class="pipe">    ├──</span> <span class="file">index.ts</span>   <span class="comment">// Shared types</span><br/>
+          <span class="pipe">    └──</span> <span class="file">messages.ts</span> <span class="comment">// Message classes</span>
+        </div>
+
+        <div class="arch-desc">
+          <div class="arch-step">
+            <div class="arch-step-num">1</div>
+            <div>
+              <h4>Agent Loop</h4>
+              <p>Sends conversation + tool definitions to the LLM. The LLM responds with text or tool calls. Tool results feed back as user messages. Repeats until done or 20 rounds reached.</p>
+            </div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-num">2</div>
+            <div>
+              <h4>Context Compression</h4>
+              <p>Three-layer compression: large outputs → disk with previews, old tool results summarized, and an optional <code>/compact</code> command for LLM continuity summaries.</p>
+            </div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-num">3</div>
+            <div>
+              <h4>Permission System</h4>
+              <p>Before each tool call, deny rules are checked. Blocks destructive commands (<code>rm -rf /</code>), network operations, and system config changes.</p>
+            </div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-num">4</div>
+            <div>
+              <h4>Memory System</h4>
+              <p>Persistent memories stored as Markdown files with YAML frontmatter. Four types: user preferences, feedback corrections, project facts, external references.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Quick Start ===== -->
+  <section id="quickstart">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Quick Start</div>
+        <h2 class="section-title">Up and running in 30 seconds</h2>
+        <p class="section-sub">One dependency install, one API key, and you're talking to your agent.</p>
+      </div>
+
+      <div class="quickstart-grid fade-in">
+        <div class="qs-card">
+          <h3>📦 Install</h3>
+          <pre>
+<span class="gray"># Clone and install</span>
+<span class="green">$</span> git clone https://github.com/chingjustwe/CodeCode.git
+<span class="green">$</span> cd CodeCode
+<span class="green">$</span> npm install
+
+<span class="gray"># Configure your API key</span>
+<span class="green">$</span> cp .env.example .env
+<span class="green">$</span> <span class="pink"># Edit .env with your provider & API key</span></pre>
+        </div>
+        <div class="qs-card">
+          <h3>🚀 Run</h3>
+          <pre>
+<span class="gray"># Default (Anthropic Claude)</span>
+<span class="green">$</span> npm start
+
+<span class="gray"># Or pick a provider:</span>
+<span class="green">$</span> npm run openai
+<span class="green">$</span> npm run deepseek
+<span class="green">$</span> npm run minimax
+<span class="green">$</span> npm run kimi
+<span class="green">$</span> npm run glm</pre>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;" class="fade-in">
+        <div class="qs-card" style="text-align:center;padding:32px;">
+          <h3 style="justify-content:center;margin-bottom:20px;">🌐 Supported Providers</h3>
+          <div class="providers" style="justify-content:center;">
+            <span class="provider-chip">OpenAI</span>
+            <span class="provider-chip">Anthropic</span>
+            <span class="provider-chip">DeepSeek</span>
+            <span class="provider-chip">MiniMax</span>
+            <span class="provider-chip">Kimi</span>
+            <span class="provider-chip">GLM</span>
+            <span class="provider-chip">+ Any OpenAI-compatible API</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Tools ===== -->
+  <section id="tools">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Tools</div>
+        <h2 class="section-title">Native tools at your agent's fingertips</h2>
+        <p class="section-sub">Each tool is a JSON Schema definition with a runtime function — registered in the tool registry and auto-included on every API call.</p>
+      </div>
+
+      <div class="fade-in" style="background:#0D1117;border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;">
+        <table class="tools-table">
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>calculate</td><td>Evaluate a mathematical expression (sanitized eval)</td></tr>
+            <tr><td>bash</td><td>Run a shell command in the current workspace (30s timeout)</td></tr>
+            <tr><td>read</td><td>Read the contents of a file (50 KB cap)</td></tr>
+            <tr><td>write</td><td>Write content to a file (creates parent directories)</td></tr>
+            <tr><td>edit</td><td>Replace the first occurrence of text in a file</td></tr>
+            <tr><td>load_skill</td><td>Load a skill into the current context</td></tr>
+            <tr><td>todo</td><td>Update the session plan for multi-step work</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Philosophy ===== -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Philosophy</div>
+        <h2 class="section-title">Why build from scratch?</h2>
+        <p class="section-sub">
+          To deeply understand how coding agents work under the hood — tool-calling loops, 
+          multi-provider LLM integration, and file-system tooling — without any framework abstraction.
+        </p>
+      </div>
+
+      <div class="quickstart-grid fade-in">
+        <div class="qs-card" style="text-align:center;">
+          <div style="font-size:40px;margin-bottom:16px;">🏗️</div>
+          <h3 style="font-size:14px;color:#F8FAFC;margin-bottom:8px;">Zero LangChain Dependency</h3>
+          <p style="font-size:13px;color:#64748B;">A single runtime dependency (<code>dotenv</code>) + TypeScript toolchain. That's it.</p>
+        </div>
+        <div class="qs-card" style="text-align:center;">
+          <div style="font-size:40px;margin-bottom:16px;">🔬</div>
+          <h3 style="font-size:14px;color:#F8FAFC;margin-bottom:8px;">Educational Design</h3>
+          <p style="font-size:13px;color:#64748B;">Every part of the agent is readable in an afternoon. No black boxes, no magic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon">{ }</div>
+            CodeCode
+          </a>
+          <p>A minimal, scratch-built AI coding agent client. Inspired by Claude Code and Open Code. Built with TypeScript and ❤️.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#quickstart">Quick Start</a>
+          <a href="#tools">Tools</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="https://github.com/chingjustwe/CodeCode" target="_blank">GitHub</a>
+          <a href="AGENTS.md">AGENTS.md</a>
+          <a href="README.md">README</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">MIT License</a>
+          <a href="#">ISC License</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 CodeCode. Open source under the ISC License.</span>
+        <div class="footer-bottom-links">
+          <a href="https://github.com/chingjustwe/CodeCode" target="_blank">GitHub</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Mobile Toggle =====
+    document.getElementById('mobileToggle').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // ===== Fade-in on scroll =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ===== Feature card mouse tracking for radial glow =====
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+      });
+    });
+
+    // ===== Close mobile nav on link click =====
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
