@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杭州一日游行程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f3ed;
+    --surface: #ffffff;
+    --text: #2c1810;
+    --text-muted: #8b7355;
+    --text-light: #b8a58a;
+    --gold: #c9a96e;
+    --gold-light: #e8d5a8;
+    --gold-dark: #a8893e;
+    --red: #c72c2c;
+    --red-light: #f5e0e0;
+    --green: #5b8c5a;
+    --green-light: #e4efe3;
+    --teal: #3d7b80;
+    --teal-light: #ddecec;
+    --line-color: #ddd6cc;
+    --shadow: 0 2px 20px rgba(44,24,16,0.06);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 24px auto 0;
+    border-radius: 2px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  h1 small {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .meta-bar {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .meta-bar span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Comparison Section */
+  .comparison {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 48px;
+  }
+
+  .comparison-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--text);
+  }
+
+  .compare-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .compare-row:last-child { margin-bottom: 0; }
+
+  .compare-label {
+    width: 60px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .compare-bar-wrap {
+    flex: 1;
+    height: 32px;
+    background: #eeebe6;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-bar {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    transition: width 0.8s ease;
+    position: relative;
+    min-width: fit-content;
+  }
+
+  .compare-bar.original {
+    background: linear-gradient(135deg, #b8a58a, #8b7355);
+    width: 40%;
+  }
+
+  .compare-bar.optimized {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    width: 70%;
+  }
+
+  .compare-bar .bar-time {
+    white-space: nowrap;
+  }
+
+  .compare-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    background: var(--red);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .compare-note {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding-top: 16px;
+    border-top: 1px solid #eeebe6;
+  }
+
+  .compare-note strong {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold-light), var(--gold), var(--gold-dark), var(--gold-light));
+    border-radius: 1px;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease forwards;
+  }
+
+  .tl-item:nth-child(1) { animation-delay: 0.1s; }
+  .tl-item:nth-child(2) { animation-delay: 0.2s; }
+  .tl-item:nth-child(3) { animation-delay: 0.3s; }
+  .tl-item:nth-child(4) { animation-delay: 0.4s; }
+  .tl-item:nth-child(5) { animation-delay: 0.5s; }
+  .tl-item:nth-child(6) { animation-delay: 0.6s; }
+  .tl-item:nth-child(7) { animation-delay: 0.7s; }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -33px;
+    top: 20px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    background: var(--bg);
+    z-index: 1;
+  }
+
+  .tl-item.highlight .tl-dot {
+    width: 18px;
+    height: 18px;
+    left: -35px;
+    top: 18px;
+    border-color: var(--red);
+    background: var(--red);
+    box-shadow: 0 0 0 4px var(--red-light);
+  }
+
+  .tl-card {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tl-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(44,24,16,0.1);
+  }
+
+  .tl-item.highlight .tl-card {
+    border-left: 4px solid var(--red);
+    box-shadow: 0 2px 24px rgba(199,44,44,0.08);
+  }
+
+  .tl-item.highlight .tl-card:hover {
+    box-shadow: 0 6px 28px rgba(199,44,44,0.14);
+  }
+
+  .tl-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .tl-time {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold-dark);
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.02em;
+  }
+
+  .tl-time .separator {
+    color: var(--text-light);
+    margin: 0 4px;
+  }
+
+  .tl-duration {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .tl-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--text);
+  }
+
+  .tl-title .emoji {
+    margin-right: 6px;
+  }
+
+  .tl-location {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .tl-location .arrow {
+    color: var(--text-light);
+    margin: 0 4px;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .tag-transit { background: var(--teal-light); color: var(--teal); }
+  .tag-food { background: #f5f0e0; color: #8b7a3e; }
+  .tag-sightseeing { background: var(--green-light); color: var(--green); }
+  .tag-shopping { background: var(--red-light); color: var(--red); }
+  .tag-waiting { background: #eeebe6; color: var(--text-muted); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid #e5ddd2;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container { padding: 32px 16px 60px; }
+    h1 { font-size: 1.7rem; }
+    .meta-bar { flex-direction: column; gap: 4px; align-items: center; }
+    .comparison { padding: 20px; }
+    .compare-row { gap: 10px; }
+    .compare-label { width: 44px; font-size: 0.78rem; }
+    .timeline { padding-left: 32px; }
+    .tl-dot { left: -26px; width: 12px; height: 12px; }
+    .tl-item.highlight .tl-dot { left: -28px; width: 16px; height: 16px; }
+    .tl-card { padding: 14px 16px; }
+    .tl-header { flex-direction: column; align-items: flex-start; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>
+      杭州一日游行程
+      <small>Hangzhou Day Trip · Itinerary</small>
+    </h1>
+    <div class="meta-bar">
+      <span>📅 2026.06.01</span>
+      <span>🚄 10:00 – 19:00</span>
+      <span>👥 2 人</span>
+    </div>
+  </header>
+
+  <!-- Comparison -->
+  <div class="comparison">
+    <div class="comparison-title">🎯 东站万象汇停留时间对比</div>
+    <div class="compare-row">
+      <div class="compare-label">原计划</div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar original">
+          <span class="bar-time">3h（含晚餐）</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-label">优化后</div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar optimized">
+          <span class="bar-time">5h 15min（含晚餐）<span class="compare-badge">+2h 15min</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-note">
+      💡 逛街时间从 <strong>2h</strong> 增加到 <strong>4h 35min+</strong>，总停留从 <strong>3h → 5h 15min</strong>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">10:00 <span class="separator">—</span> 10:25</span>
+          <span class="tl-duration">25 min</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🚇</span>地铁前往湖滨 in77</div>
+        <div class="tl-location">杭州东站 <span class="arrow">→</span> 湖滨 in77</div>
+        <span class="tl-tag tag-transit">通勤</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">10:25 <span class="separator">—</span> 11:15</span>
+          <span class="tl-duration">50 min</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🥟</span>漫步西湖 + 轻午餐</div>
+        <div class="tl-location">湖滨 in77</div>
+        <span class="tl-tag tag-food">用餐</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">11:15 <span class="separator">—</span> 12:15</span>
+          <span class="tl-duration">1 h</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🌿</span>绿野仙踪游玩</div>
+        <div class="tl-location">吴山广场</div>
+        <span class="tl-tag tag-sightseeing">游玩</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">12:15 <span class="separator">—</span> 12:45</span>
+          <span class="tl-duration">30 min</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🚕</span>打车前往东站万象汇</div>
+        <div class="tl-location">吴山广场 <span class="arrow">→</span> 东站万象汇</div>
+        <span class="tl-tag tag-transit">通勤</span>
+      </div>
+    </div>
+
+    <div class="tl-item highlight">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">12:45 <span class="separator">—</span> 18:00</span>
+          <span class="tl-duration">5 h 15 min</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🛍️</span>逛街购物 + 晚餐 ⭐</div>
+        <div class="tl-location">东站万象汇</div>
+        <span class="tl-tag tag-shopping">逛街</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">18:00 <span class="separator">—</span> 18:20</span>
+          <span class="tl-duration">20 min</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🚶</span>步行前往杭州东站</div>
+        <div class="tl-location">东站万象汇 <span class="arrow">→</span> 杭州东站</div>
+        <span class="tl-tag tag-transit">通勤</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <span class="tl-time">18:20 <span class="separator">—</span> 19:00</span>
+          <span class="tl-duration">40 min</span>
+        </div>
+        <div class="tl-title"><span class="emoji">🚄</span>候车</div>
+        <div class="tl-location">杭州东站</div>
+        <span class="tl-tag tag-waiting">候车</span>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    杭州一日游 · 优化行程方案
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杭州一日游 · 优化行程（直奔吴山广场版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #e2efe9 0%, #c8e0d8 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        .card {
+            max-width: 880px;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 30px 55px -15px rgba(0,30,20,0.25);
+            border-radius: 2.8rem;
+            padding: 2.5rem 2.2rem;
+            border: 1px solid rgba(120,160,140,0.25);
+            transition: all 0.2s ease;
+        }
+        h1 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 2.1rem;
+            font-weight: 650;
+            color: #1b4b3b;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.4px;
+        }
+        .subtitle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+            color: #2d6b56;
+            font-weight: 500;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+        }
+        .highlight-badge {
+            background: #f7c25a;
+            color: #3a3a1a;
+            padding: 0.35rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            box-shadow: 0 6px 14px rgba(247,194,90,0.45);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f7fdfa;
+            border-radius: 1.6rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,40,30,0.06);
+            font-size: 0.95rem;
+        }
+        th {
+            background: #1b4b3b;
+            color: white;
+            font-weight: 600;
+            padding: 1rem 0.8rem;
+            text-align: left;
+            font-size: 0.88rem;
+            letter-spacing: 0.4px;
+        }
+        td {
+            padding: 0.95rem 0.8rem;
+            border-bottom: 1px solid #d4e7de;
+            color: #1b4b3b;
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .time-col {
+            font-weight: 650;
+            color: #0d4b35;
+            white-space: nowrap;
+        }
+        .duration-col {
+            font-weight: 500;
+            background: #e2f0e9;
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            font-size: 0.85rem;
+            color: #11563c;
+            white-space: nowrap;
+        }
+        .location {
+            font-weight: 650;
+            color: #1f5c45;
+        }
+        .transport {
+            color: #b55a2c;
+            font-weight: 500;
+            background: #fff6ef;
+            padding: 0.15rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-left: 0.3rem;
+        }
+        .meal {
+            color: #a64d2e;
+            font-weight: 600;
+            background: #fef3ea;
+            padding: 0.1rem 0.6rem;
+            border-radius: 16px;
+        }
+        .fun {
+            color: #2a6b44;
+            font-weight: 500;
+        }
+        .shopping-highlight {
+            background: #fffbe6;
+            font-weight: 700;
+            color: #7a6218;
+            border-left: 6px solid #f3b33d;
+            padding-left: 1rem;
+        }
+        .note {
+            margin-top: 2.2rem;
+            background: #f3f9f6;
+            border-radius: 1.4rem;
+            padding: 1.3rem 1.6rem;
+            color: #1b4b3b;
+            font-size: 0.92rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid #cde0d8;
+            line-height: 1.55;
+        }
+        .note-icon {
+            font-size: 1.6rem;
+        }
+        .restaurant-name {
+            font-weight: 700;
+            color: #b3591a;
+        }
+        @media (max-width: 600px) {
+            .card {
+                padding: 1.5rem;
+            }
+            table {
+                font-size: 0.78rem;
+            }
+            th, td {
+                padding: 0.7rem 0.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>
+            <span>🌿</span> 杭州东站·绿野仙踪&万象汇一日
+        </h1>
+        <div class="subtitle">
+            <span>📅 2026年6月1日 · 🚄 10:00抵达 / 19:00出发</span>
+            <span class="highlight-badge">🛍️ 万象汇逛街 4h+ 超尽兴</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>行程内容</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>时长</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1. 高铁到达 -->
+                <tr>
+                    <td>1</td>
+                    <td><span class="location">🚉 杭州东站</span> —— 高铁到站</td>
+                    <td class="time-col">10:00</td>
+                    <td class="time-col">10:00</td>
+                    <td><span class="duration-col">—</span></td>
+                    <td>准点抵达，直接出发</td>
+                </tr>
+                <!-- 2. 东站 → 吴山广场绿野仙踪 -->
+                <tr>
+                    <td>2</td>
+                    <td><span class="location">杭州东站 → 吴山广场·绿野仙踪</span> <span class="transport">🚖 打车 / 地铁</span></td>
+                    <td class="time-col">10:00</td>
+                    <td class="time-col">10:30</td>
+                    <td><span class="duration-col">30分钟</span></td>
+                    <td>路程固定，约30分钟</td>
+                </tr>
+                <!-- 3. 绿野仙踪游玩 -->
+                <tr>
+                    <td>3</td>
+                    <td><span class="location">🌳 吴山广场绿野仙踪</span> <span class="fun">打卡游玩</span></td>
+                    <td class="time-col">10:30</td>
+                    <td class="time-col">11:30</td>
+                    <td><span class="duration-col">1小时</span></td>
+                    <td>沉浸绿色秘境，拍照留念</td>
+                </tr>
+                <!-- 4. 河坊街午餐 -->
+                <tr>
+                    <td>4</td>
+                    <td><span class="location">🏮 河坊街（紧邻吴山广场）</span> <span class="meal">午餐</span></td>
+                    <td class="time-col">11:30</td>
+                    <td class="time-col">12:30</td>
+                    <td><span class="duration-col">1小时</span></td>
+                    <td>步行即达，品尝特色小吃或正餐</td>
+                </tr>
+                <!-- 5. 河坊街/吴山广场 → 东站万象汇 -->
+                <tr>
+                    <td>5</td>
+                    <td><span class="location">河坊街 → 东站万象汇</span> <span class="transport">🚕 打车</span></td>
+                    <td class="time-col">12:30</td>
+                    <td class="time-col">13:00</td>
+                    <td><span class="duration-col">30分钟</span></td>
+                    <td>固定通勤，约30分钟车程</td>
+                </tr>
+                <!-- 6. 东站万象汇 逛街+晚餐 （核心） -->
+                <tr class="shopping-highlight">
+                    <td>6</td>
+                    <td>
+                        <span class="location">🛍️ 东站万象汇</span> 
+                        <strong>自由逛街</strong> + 
+                        <span class="restaurant-name">🍛 晚餐「胡恰江西菜」</span>
+                    </td>
+                    <td class="time-col">13:00</td>
+                    <td class="time-col">18:30</td>
+                    <td><span class="duration-col">5小时30分钟</span></td>
+                    <td>💡 逛街约4h30min，晚餐灵活安排（推荐17:00-18:00）</td>
+                </tr>
+                <!-- 7. 万象汇 → 杭州东站 -->
+                <tr>
+                    <td>7</td>
+                    <td><span class="location">东站万象汇 → 杭州东站</span> <span class="transport">🚶 步行</span></td>
+                    <td class="time-col">18:30</td>
+                    <td class="time-col">18:50</td>
+                    <td><span class="duration-col">20分钟</span></td>
+                    <td>步行直达出发层，非常近</td>
+                </tr>
+                <!-- 8. 候车/出发 -->
+                <tr>
+                    <td>8</td>
+                    <td><span class="location">🚄 杭州东站</span> 检票候车</td>
+                    <td class="time-col">18:50</td>
+                    <td class="time-col">19:00</td>
+                    <td><span class="duration-col">10分钟</span></td>
+                    <td>时间充裕，从容登车</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note">
+            <span class="note-icon">✨</span>
+            <div>
+                <p><strong>📌 调整说明</strong>：按照新计划，<strong>高铁到站后直接前往吴山广场绿野仙踪</strong>，跳过湖滨in77，午餐改在河坊街（紧邻吴山广场），整体节奏更紧凑。</p>
+                <p>🕒 <strong>万象汇时间最大化</strong>：从13:00到18:30总计<strong>5小时30分</strong>，扣除晚餐约1小时，<strong>纯逛街时间达到4小时30分钟以上</strong>，完全满足要求。</p>
+                <p>🍛 晚餐已锁定<span class="restaurant-name">「胡恰江西菜」</span>（万象汇内），建议17:00左右开始用餐，逛街与美食无缝衔接。</p>
+                <p>🚶 万象汇距杭州东站步行仅20分钟，18:30离开完全赶得上19:00高铁，请放心享受逛街时光。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
