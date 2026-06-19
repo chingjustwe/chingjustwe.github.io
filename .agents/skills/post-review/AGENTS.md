@@ -4,15 +4,16 @@ Guidance for AI coding agents working in this repository.
 
 ## What this repo is
 
-An OpenCode skill for reviewing blog posts. The runtime artifact is `SKILL.md`:
+An OpenCode skill for managing the full lifecycle of blog posts: review,
+publish, translate, and deploy. The runtime artifact is `SKILL.md`:
 the agent reads its YAML frontmatter (metadata + allowed tools) followed by the
-editor prompt. There is no build step and no code to run.
+editor workflow. There is no build step and no code to run.
 
 ## Key files
 
 - `SKILL.md` — the skill itself. YAML frontmatter (`name`, `version`,
-  `description`, `allowed-tools`) followed by the review workflow (three passes
-  + final deliverable).
+  `description`, `allowed-tools`) followed by the end-to-end workflow (Phase 0
+  through Phase 7).
   **This is the source of truth.**
 
 ## When to update
@@ -23,6 +24,8 @@ editor prompt. There is no build step and no code to run.
   to check.
 - **De-AI pass rules change** — when you add new blog-specific voice rules
   beyond the humanizer skill's 30 patterns.
+- **Workflow phase changes** — when you add, remove, or reorder phases in the
+  post-review pipeline (preview, translation, cleanup, commit).
 - **Version bump** — increment the `version` field in the YAML frontmatter and
   note what changed.
 
@@ -34,6 +37,8 @@ editor prompt. There is no build step and no code to run.
   sources.
 - The default target voice is a natural Chinese technical blog tone (direct,
   slightly casual, occasional first-person).
+- The workflow is sequential and gated on user approval at each handoff point
+  (after review, after preview).
 
 ## Maintenance
 
