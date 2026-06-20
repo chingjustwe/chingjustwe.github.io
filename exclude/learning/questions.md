@@ -19,6 +19,8 @@
 ## coding agent
 
 - 如何让大模型每输出一个字就返回给客户端？而不是 call 一个 api 当所有回答都生成好之后再返回客户端
+- agui demo, integration with codecode
+- ADK: https://adk.dev/
 
 ## AI Agent
 
